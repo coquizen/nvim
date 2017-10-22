@@ -22,6 +22,7 @@ hi CursorLine cterm=bold gui=bold
 																		" intead, put a `$` sign at
 																		" the end of the changed text.
 
+filetype plugin on									" Enable filetype plugins
 set laststatus=2										" Always show the status line
 
 set lazyredraw											" Do not redraw the screen while
@@ -128,8 +129,6 @@ nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
 " [\cs] Clear search.
 map <leader>xs <Esc>:noh<CR>
 
-" [\v] edit the config files
-map <leader>v :vsplit ~/.config/nvim/init.vim<CR> :split ~/.config/nvim/plugins.vim<CR>
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
@@ -150,7 +149,18 @@ noremap <C-h> <C-w>h
 "  / File Administration /
 "  ----------------------
 
-"
+" ( Functions )
+" This function will open a file in the current buffer if it is empty
+" otherwrise will open in a split pane.
+function! OpenInSplitIfBufferDirty(file)
+		if line('$') == 1 && getline(1) == ''
+				exec 'e' a:file
+		else
+				exec 'sp' a:file
+		endif
+endfunction
+command -nargs=1 -complete=file -bar SmartOpen :call OpenInSplitIfBufferDirty(<q-args>)
+
 " Reading and Writing Files
 																		" files in case we forgot to sudo 
 																		" nvim protected files
@@ -232,4 +242,10 @@ set wildignore+=*/.svn/*        	" │
 set wildignore+=*/log/*         	" │
 set wildignore+=*/tmp/*         	" ┘
 
+" REMAPPINGS
+"
+
+" [\v] edit the config files
+nnoremap <silent> <leader>vi :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/init.vim")<CR>
+nnoremap <silent> <leader>vp :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/plugins.vim")<CR>
 source $HOME/.config/nvim/plugins.vim
