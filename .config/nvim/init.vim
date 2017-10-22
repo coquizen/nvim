@@ -30,6 +30,7 @@ set lazyredraw											" Do not redraw the screen while
 																		" and other commands that have
 																		" not been typed. 
 
+set textwidth=80										" The standard setting for most text files
 set listchars=tab:▸\                " ┐
 set listchars+=trail:·              " │ Use custom symbols to
 set listchars+=eol:↴                " │ represent invisible characters.
@@ -98,6 +99,11 @@ set wildmenu                   			" Enable enhanced command-line
 																		" highlighted.
 
 set winminheight=0									" Allow windows to be squashed;
+
+set wrap
+" ----------------------------------------------------------------------
+" | Plugin - neovimhaskell/haskell-vim                                  |
+" ----------------------------------------------------------------------
 
 "   ---------------------
 "  / Search and Replace /
