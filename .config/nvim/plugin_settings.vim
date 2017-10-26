@@ -1,4 +1,4 @@
-" ----------------------------------------------------------------------
+" ---------------------------------------------------------------------
 " | Plugin - neovimhaskell/haskell-vim                                  |
 " ----------------------------------------------------------------------
 " Align 'then' two spaces after 'if'
@@ -27,7 +27,7 @@ function! HaskellFormat(which) abort
   endif
 endfunction
 
-" Key bindings
+" RE|MAPPINGS
 augroup haskellStylish
   au!
   " Just hindent
@@ -39,13 +39,35 @@ augroup haskellStylish
 augroup END
 
 " ----------------------------------------------------------------------
+" | Plugin - scooloose/nerdtree                                         |
+" ----------------------------------------------------------------------
+let NERDTreeMinimalUI = 0
+" Since we already have a list of files we'd like to ignore with
+" wildignore, have NERDTree respect it.
+let NERDTreeRespectWildIgnore = 1
+
+" Open NERDTree automatically when a directory is supplied at nvim execution
+augroup nerd_tree
+    autocmd!
+    autocmd vimrc StdinReadPre * let s:std_in=1
+    " If nvim is started with an input directory, start up NERDTree
+    autocmd vimrc VimEnter *
+                \ if argc() == 1 && isdirectory(argv(0)) |
+                \   bd |
+                \   exec 'cd' fnameescape(argv(0)) |
+                \   NERDTree |
+                \ end
+augroup end
+" Shortcut to toggle NERDTree
+nnoremap <leader>n :NERDTreeToggle<CR>
+" ----------------------------------------------------------------------
 " | Plugin - scooloose/nerdcommenter                                    |
 " ----------------------------------------------------------------------
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 
 " Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
+let g:NERDCompactSexyComs = 0
 
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
@@ -63,9 +85,9 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " ----------------------------------------------------------------------
-" | Plugin - vim-airline/vim-airline                                   |
+" " | Plugin - vim-airline/vim-airline                                   |
 " ----------------------------------------------------------------------
-let g:airline_symbols_powerline = 1
+let g:airline_powerline_fonts = 1
 
 " I don't care about the file type, encoding, or format.
 let g:airline_section = "%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}"
@@ -73,17 +95,25 @@ let g:airline_section = "%{airline#util#prepend(airline#extensions#tagbar#curren
 " ----------------------------------------------------------------------
 " | Plugin - ghc-mod                                                    |
 " ----------------------------------------------------------------------
-au FileType haskell
+		au FileType haskell
     \ map <silent> <buffer> tc :GhcModTypeClear<CR> |
     \ map <silent> <buffer> ti :GhcModTypeInsert<CR> |
-    \ map <silent> <buffer> tt :GhcModType<CR>
+    \ map <silent> <buffer> tt :GhcModType<CR> |
+
+	autocmd BufRead,BufNewFile ~/.config/xmonad * call s:add_xmonad_path()
+	function! s:add_xmonad_path()
+	  if !exists('b:ghcmod_ghc_options')
+	    let b:ghcmod_ghc_options = []
+	  endif
+	  call add(b:ghcmod_ghc_options, '-i' . expand('~/.config/xmonad/lib'))
+	endfunction
 
 " ----------------------------------------------------------------------
 " | Plugin - ervandew/supertab                                           |
 " ----------------------------------------------------------------------
 function! EnableSuperTab()
-		let g:SuperTabeDefautCompletionType = '<c-x><c-o>'
-		let g:haskellMode_completion_ghc = 0
+		let g:SuperTabDeefautCompletionType = '<c-x><c-o>'
+		let g:haskellmode_completion_ghc = 0
 		let g:necoghc_enable_detailed_browse = 1
 		setlocal omnifunc=necoghc#omnifunc
 
@@ -102,5 +132,5 @@ autocmd FileType haskell :call EnableSuperTab()
 " | Plugin - emajutsushi/tagbar                                          |
 " ----------------------------------------------------------------------
 " Open Tagbar for the following languages
-autocmd FileType haskell nested :TagBarOpen
+autocmd FileType haskell nested :TagbarOpen
 

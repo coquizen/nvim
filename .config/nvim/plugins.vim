@@ -12,19 +12,19 @@
 " Check to see if the manager has been installed, if not, then install and run
 let vimplug_status = expand(expand("~/.local/share/nvim/site/autoload/plug.vim"))
 
-if !filereadable(vimplug_status) 
-		if !executable("curl") 
-				echoerr "You have to installl or first install vim-plug yourself!" 
-				execute "q!" 
+if !filereadable(vimplug_status)
+		if !executable("curl")
+				echoerr "You have to install or first install vim-plug yourself!"
+				execute "q!"
 		endif
-		
+
 		echo "Installing Vim-Plug..." echo ""
-		
-		silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
-		autocmd VimEnter * PlugInstall 
+
+		silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+		autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-"    ------------- 
+"    -------------
 "   / Plugins     /
 "  --------------
 
@@ -33,64 +33,72 @@ endif
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.local/share/nvim/plugged')
 "
-" General 
+" General
 " -------
-Plug 'mhinz/vim-startify'												" A nice startup page 
+Plug 'mhinz/vim-startify'                             " A nice startup page
 
-Plug 'scrooloose/nerdtree'											" A tool to navigate directory tree
+Plug 'scrooloose/nerdtree'                            " A tool to navigate directory tree
 
-Plug 'scrooloose/nerdcommenter'									" A collection of comment functions 
+Plug 'scrooloose/nerdcommenter'                       " A collection of comment functions
 
-Plug 'majutsushi/tagbar'												" Displays tags on the right side of the screen and lets you navigate through them.
+Plug 'majutsushi/tagbar'                              " Displays tags on the right side of the screen and lets you navigate through them.
 
-Plug 'ervandew/supertab'												" Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
+Plug 'ervandew/supertab'                              " Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
 
 
-" Git Plugins
-" ------------
-Plug 'airblade/vim-gitgutter'										" Display git diff in margin
-"
-" Colorschemes
-" ------------- 
-Plug 'rakr/vim-one'															" 24bit 
+                                                      " Git Plugins
+                                                      " ------------
+Plug 'airblade/vim-gitgutter'                         " Display git diff in margin
+                                                      "
+                                                      " Colorschemes
+                                                      " -------------
+Plug 'rakr/vim-one'                                   " 24bit
 
-Plug 'morhetz/gruvbox'													" 24bit 
+Plug 'morhetz/gruvbox'                                " 24bit
 
-Plug 'lifepillar/vim-solarized8'								" 24bit 
+Plug 'lifepillar/vim-solarized8'                      " 24bit
 
-Plug 'flazz/vim-colorschemes'										" Various colorschemes 
+Plug 'flazz/vim-colorschemes'                         " Various colorschemes
 
-Plug 'jacoborus/tender'													" Another colorscheme
+Plug 'jacoborus/tender'                               " Another colorscheme
 
-" Statusline
-" -----------
-Plug 'vim-airline/vim-airline'									" Status line alternative 
+Plug 'KnoP-01/tortus'                                 " Dark gray (yellow on black) colorshecme based on torte.
 
-Plug 'vim-airline/vim-airline-themes'						" Color themes for airline
+Plug 'tomasr/molokai'                                 " Molokai theme
 
-" Backengines
-"
-Plug 'w0rp/ale'																	" Asynchronous Lint Engine
+                                                      " Statusline
+                                                      " -----------
+Plug 'vim-airline/vim-airline'                        " Status line alternative
 
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}			" Interactive command execution in Vim. 
-" --------------------------
-" Language Specific Plugins
-" --------------------------
-"
-" Haskell 
-Plug 'eagletmt/ghcmod-vim'											" Integrates with ghc-mod to let you check types from within vim, insert boilerplate code, and lots of other things.
+Plug 'vim-airline/vim-airline-themes'                 " Color themes for airline
 
-Plug 'mkasa/neco-ghc-lushtags'									" Pulls together supertab, lushtags, and ghcmod-vim to drive the tab completion.
+                                                      " Backengines
+                                                      "
+Plug 'w0rp/ale'                                       " Asynchronous Lint Engine
 
-Plug 'neovimhaskell/haskell-vim'								" Syntax highlighting and 
-																								" indentation.
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}            " Interactive command execution in Vim.
+                                                      " --------------------------
+                                                      " Language Specific Plugins
+                                                      " --------------------------
+                                                      "
+                                                      " Haskell
+Plug 'eagletmt/ghcmod-vim'                            " Integrates with ghc-mod to let you check types from within vim, insert boilerplate code, and lots of other things.
 
-Plug 'alx741/vim-hindent'												" Indentation via hindent 
-																								" and stylish-haskell
-																								" Initialize plugin sy`stem
+Plug 'junegunn/vim-easy-align'                        " A vim alignment plugin
 
-Plug 'Twinside/hoogle'													" Run hoogle within nvim
+Plug 'mkasa/neco-ghc-lushtags'                        " Pulls together supertab, lushtags, and ghcmod-vim to drive the tab completion.
+
+Plug 'neovimhaskell/haskell-vim'                      " Syntax highlighting and
+                                                      " indentation.
+
+Plug 'alx741/vim-hindent'                             " Indentation via hindent
+                                                      " and stylish-haskell
+                                                      " Initialize plugin sy`stem
+
+Plug 'Twinside/vim-hoogle'                            " Run hoogle within nvim
+
+Plug 'ryanoasis/vim-devicons'                         " Adds file type glyphs/icons to populr vim plugins}: NERDTree, Airline Powerline Unite, etcc...
 
 call plug#end()
-
+source $HOME/.local/share/nvim/plugins/tagbar-haskell.vim
 source $HOME/.config/nvim/plugin_settings.vim
