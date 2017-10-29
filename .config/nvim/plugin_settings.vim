@@ -93,21 +93,40 @@ let g:airline_powerline_fonts = 1
 let g:airline_section = "%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}"
 
 " ----------------------------------------------------------------------
+" | Plugin - autozimu/LanguageClient-neovim                            |
+" ----------------------------------------------------------------------
+let g:LanguageClient_serverCommands = {
+            \ 'haskell': ['hie', '--lsp'],
+            \ }
+let g:LanguageClient_autoStart = 1
+
+" ----------------------------------------------------------------------
 " | Plugin - ghc-mod                                                    |
 " ----------------------------------------------------------------------
-		au FileType haskell
-    \ map <silent> <buffer> tc :GhcModTypeClear<CR> |
-    \ map <silent> <buffer> ti :GhcModTypeInsert<CR> |
-    \ map <silent> <buffer> tt :GhcModType<CR> |
-
-	autocmd BufRead,BufNewFile ~/.config/xmonad * call s:add_xmonad_path()
-	function! s:add_xmonad_path()
-	  if !exists('b:ghcmod_ghc_options')
-	    let b:ghcmod_ghc_options = []
-	  endif
-	  call add(b:ghcmod_ghc_options, '-i' . expand('~/.config/xmonad/lib'))
-	endfunction
-
+au FileType haskell
+            \ map <silent> <buffer> tc :GhcModTypeClear<CR> |
+            \ map <silent> <buffer> ti :GhcModTypeInsert<CR> |
+            \ map <silent> <buffer> tt :GhcModType<CR> |
+augroup xmonad
+		autocmd!
+		autocmd BufRead,BufNewFile ~/.xmonad/* call s:add_xmonad_path()
+function! s:add_xmonad_path()
+		let lib_path = resolve(expand('~/.xmonad/lib'))
+		let base_dir = resolve(expand('~/.xmonad'))
+    " For ghcmod-vim plugin
+    if !exists('b:ghcmod_ghc_options')
+        let b:ghcmod_ghc_options = []
+        let g:ghcmod_use_basedir = []
+    endif
+    call add(b:ghcmod_ghc_options, '-i' . expand('~/.xmonad/lib'))
+    call add(g:ghcmod_use_basedir, base_dir)
+endfunction
+augroup end
+"     " For neomake
+"     " let cur = neomake#makers#ft#haskell#ghcmod()
+"     " let cur.args = ['-g', '-i' . lib_path, 'check']
+"     " let b:neomake_haskell_ghcmod_maker = cur
+" " endfunction
 " ----------------------------------------------------------------------
 " | Plugin - ervandew/supertab                                           |
 " ----------------------------------------------------------------------
@@ -126,11 +145,10 @@ function! EnableSuperTab()
 		endif
 endfunction
 
-autocmd FileType haskell :call EnableSuperTab()
+" autocmd FileType haskell :call EnableSuperTab()
 
 " ----------------------------------------------------------------------
 " | Plugin - emajutsushi/tagbar                                          |
 " ----------------------------------------------------------------------
 " Open Tagbar for the following languages
-autocmd FileType haskell nested :TagbarOpen
-
+" autocmd FileType haskell nested :TagbarOpen
