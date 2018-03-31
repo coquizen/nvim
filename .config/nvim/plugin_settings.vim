@@ -151,4 +151,150 @@ endfunction
 " | Plugin - emajutsushi/tagbar                                          |
 " ----------------------------------------------------------------------
 " Open Tagbar for the following languages
-" autocmd FileType haskell nested :TagbarOpen
+autocmd FileType haskell nested :TagbarOpen
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module' : 'm',
+        \ 'class'  : 'c',
+        \ 'data'   : 'd',
+        \ 'type'   : 't'
+    \ }
+\ }
+" ----------------------------------------------------------------------
+" | Plugin - vim-syntastic/syntastic                                    |
+" ----------------------------------------------------------------------
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" ----------------------------------------------------------------------
+" | Plugin - Shougo/deoplete.vim                                    |
+" ----------------------------------------------------------------------
+set completeopt=longest,menuone " auto complete setting
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_complete_start_length = 1
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns['default'] = '\h\w*'
+let g:deoplete#omni#input_patterns = {}
+" For GOLANG
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#align_class = 1
+
+" ----------------------------------------------------------------------
+" | Plugin - neomake/neomake                                            |
+" ----------------------------------------------------------------------
+autocmd BufWritePost * Neomake
+let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
+let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
+let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+let g:neomake_go_gometalinter_maker = {
+  \ 'args': [
+  \   '--tests',
+  \   '--enable-gc',
+  \   '--concurrency=3',
+  \   '--fast',
+  \   '-D', 'aligncheck',
+  \   '-D', 'dupl',
+  \   '-D', 'gocyclo',
+  \   '-D', 'gotype',
+  \   '-E', 'errcheck',
+  \   '-E', 'misspell',
+  \   '-E', 'unused',
+  \   '%:p:h',
+  \ ],
+  \ 'append_file': 0,
+  \ 'errorformat':
+  \   '%E%f:%l:%c:%trror: %m,' .
+  \   '%W%f:%l:%c:%tarning: %m,' .
+  \   '%E%f:%l::%trror: %m,' .
+  \   '%W%f:%l::%tarning: %m'
+  \ }
+" ----------------------------------------------------------------------
+" | Plugin - faith/vim-go                                               |
+" ----------------------------------------------------------------------
+let g:go_def_mapping_enabled = 1
+let g:go_fmt_command = 'goimports'
+let g:go_fmt_fail_silently = 1
+let g:go_term_enabled = 1
+
+" ----------------------------------------------------------------------
+" | Plugin - scrooloose/nerdtree                                        |
+" ----------------------------------------------------------------------
+" Open NERDTree if nvim opens on a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" Don't quit NERDtree when opening a file
+let NERDTreeQuitOnOpen = 0
+" Automatically close NERDTree if last man standing
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Pretty NERDTree UI
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+" ----------------------------------------------------------------------
+" | Plugin - vim-airline/vim-airline                                    |
+" ----------------------------------------------------------------------
+" Displau Buffers
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+" ----------------------------------------------------------------------
+" | Plugin - ryanoasis/vim-devicons                                    |
+" ----------------------------------------------------------------------
+" loading the plugin
+let g:webdevicons_enable = 1
+" adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" adding to vim-airline's tabline
+let g:webdevicons_enable_airline_tabline = 1
+" adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
+" ----------------------------------------------------------------------
+" | Plugin - rakr/vim-one                                              |
+" ----------------------------------------------------------------------
+" Enables italics if using the one colorscheme
+let g:one_allow_italics = 1
+
+
+" ----------------------------------------------------------------------
+" | GUI Settings                                                         |
+" ----------------------------------------------------------------------
+if (has("termguicolors"))
+	set termguicolors
+endif
+colorscheme one
+set background=dark
+" ----------------------------------------------------------------------
+" | Plugin - neovim/neovim-ghcmod                                       |
+" ----------------------------------------------------------------------
+" map <leader>u to toggle the undoo truee
+map <leader>u :UndotreeToggle<cr>
+
