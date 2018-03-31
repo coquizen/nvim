@@ -14,6 +14,7 @@ set backspace=indent                " ┐ Allow 'backspace'
 set backspace+=eol                  " │ in insert mode
 set backspace+=start                " ┘
 
+set clipboard=unnamed               " Setting to integrate with mac os clipboard
 set cmdheight=2                     " Set the command section height to two lines;
                                     " useful when there are multiple error messages
 " set colorcolumn=80                " Set a vertical line at the 80th column.
@@ -41,7 +42,7 @@ set listchars+=trail:·              " │ Use custom symbols to
 "set listchars+=eol:↴               " │ represent invisible characters.
 set listchars+=nbsp:_               " ┘
 set list
-
+set mouse=a			    " Allow use of mouse in all modes
 set nojoinspaces                    " When using the join command
                                     " only insert a single space
                                     " after a `.`, `?`, or `!`.
@@ -86,8 +87,8 @@ set showtabline=2                   " Always show tab bar.
 
 set spelllang=en_us                 " Set the spell-check language.
 
-set splitbelow splitright           " More intuitive window placement
-
+set splitbelow                      " More intuitive window placement
+set splitright
 set synmaxcol=2500                  " Limit syntax highlighting
                                     " (this avoids the very slow
                                     " redrawing when files contain
@@ -118,17 +119,18 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |     exe "norma
 
 augroup vimrc
     autocmd!
-    " autocmd vimrc ColorScheme * :hi NonText ctermfg=236
-    " autocmd vimrc ColorScheme * :hi SpecialKey ctermfg=23
+    autocmd vimrc ColorScheme * :hi NonText ctermfg=236
+    autocmd vimrc ColorScheme * :hi SpecialKey ctermfg=23
     " Show trailing whitespace
     autocmd vimrc ColorScheme * :hi ExtraWhitespace ctermbg=red guibg=red
 augroup END
 
-" Automaticallyu reload nvim's configuration files when they change
+" Automatically reload nvim's configuration files when they change
 augroup auto_reload_nvim_configs
     autocmd!
-    autocmd BufWritePost vimrc source $MYVIMRC
+    autocmd BufWritePost init.vim plugin_settings.vim plugins.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
+
 "
 " Dynamic use of relative line number
 augroup relative_line_numbering
@@ -278,17 +280,16 @@ set wildignore+=*/.git/*        	" │
 set wildignore+=*/.hg/*         	" │
 set wildignore+=*/.svn/*        	" │
 set wildignore+=*/log/*         	" │
-set wildignore+=*.hi              " │
-set wildignore+=xmonad.state      " │
-set wildignore+=xmonad.errors     " │
-set wildignore+=prompt-history    " │
+set wildignore+=*.hi              	" │
+set wildignore+=xmonad.state      	" │
+set wildignore+=xmonad.errors     	" │
+set wildignore+=prompt-history    	" │
 "set wildignore+=*/tmp/*         	" ┘
 
 " RE|MAPPINGS
 "
 " [\v] edit the config files
-nnoremap <silent> <leader>vi :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/init.vim")<CR>
-nnoremap <silent> <leader>vp :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/plugin-settings.vim")<CR> :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/plugins.vim")<CR>
+nnoremap <silent> <leader>vi :tabnew <bar> :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/init.vim")<CR> <bar> :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/plugins.vim")<CR> <bar> :call OpenInSplitIfBufferDirty("$HOME/.config/nvim/plugin_settings.vim")<CR>
 
 " I fat finger quite a bit
 if has('user_commands')
