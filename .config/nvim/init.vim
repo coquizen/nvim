@@ -164,15 +164,14 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" scrooloose/nerdtree
+" scrooloose/erdtree
 autocmd StdinReadPre * let s:std_in=1             " Open NERDTree if nvim opens on a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 let NERDTreeIgnore=['.DS_Store']
 let NERDTreeHighlightCursorLine = 1               " Highlight the selected entry in the tree
 let NERDTreeQuitOnOpen = 0                        " Don't quit NERDtree when opening a file
-autocmd BufEnter * if (winnr("$") == 1            " Close vim if the only window left open is a NERDTree
-            \ && exists("b:NERDTree")
-            \ && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+                                                  " Close vim if the only window left open is a NERDTree<Paste>
 let NERDTreeMinimalUI = 1                         " Pretty NERDTree UI
 let NERDTreeDirArrows = 1
 
@@ -236,14 +235,13 @@ let g:go_auto_sameids = 1                         " This option will highlight a
                                                   " the identifier under the cursor (:GoSameIds) automatically.
 
 " autozimu/LanguageClient-neovim
-let g:LanguageClient_serverCommands =             " Configure LSP to use haskell-ide-engine
-            \ { 'haskell': ['hie', '--lsp'], }
-
+let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'], }
+                                                  " Configure LSP to use haskell-ide-engine
 " vim-airline/vim-airline
-let g:airline#extensions#quickfix#location_text = " Enable location in quickfix
-            \ 'Location'
-let g:airline#extensions#quickfix#quickfix_text = " Define the quickfix label
-            \ 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'Location'
+                                                  " Enable location in quickfix
+let g:airline#extensions#quickfix#quickfix_text =  'Quickfix'
+                                                  " Define the quickfix label
 let g:airline#extensions#tabline#enabled = 1      " Enable enanced tabline
 let g:airline_powerline_fonts = 1                 " Use powerline symbols
 
@@ -275,8 +273,8 @@ let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
 let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
 
-let g:neomake_go_enabled_makers =                  " For GOLANG
-            \ [ 'go', 'gometalinter' ]
+let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+                                                   " For GOLANG
 let g:neomake_go_gometalinter_maker = {
   \ 'args': [
   \   '--tests',
