@@ -1,4 +1,9 @@
 " Author: Ian G Canino
+"
+"
+"
+"
+"
 " Description: an opinionated configuration for neovim based on my usaage
 " for Haskell, Swift, and general fullstack development on MacOS
 "
@@ -32,8 +37,7 @@
 "       Git
 "       Colorschemes
 "       BackEngines
-"       Languages
-"       Status Line
+"       Languages Status Line
 "     Settings
 "
 "  General:
@@ -65,21 +69,35 @@ endif
 "     Plugins
 " ------------------------------------
 
-call plug#begin('~/.local/share/nvim/plugged')	  " Specify a directory for plugins
+call plug#begin('~/.local/share/nvim/plugged')    " Specify a directory for plugins
 
 " General
 Plug 'mhinz/vim-startify'                         " A nice startup page
 Plug 'scrooloose/nerdtree'                        " A tool to navigate directory tree
 Plug 'scrooloose/nerdcommenter'                   " A collection of comment functions
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'    " Extra syntax and highlight for nerdtree files
 Plug 'majutsushi/tagbar'                          " Displays tags on the right side of the screen and lets you navigate through them.
+Plug 'airblade/vim-rooter'                        " Changes Vim working directory to project root (identified by presence of known directory or file).
 Plug 'junegunn/vim-easy-align'                    " A vim alignment plugin
 Plug 'ervandew/supertab'                          " Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
-Plug 'mbbill/undotree'                            " Undo plugin
-Plug 'tommcdo/vim-lion'	                          " A simple alignment operator for Vim text editor
-Plug 'sjl/vitality.vim'	                          " Integrate vim nicely with tmux and iterm2
+Plug 'simnalamburt/vim-mundo'                     " Vim undo tree visualizer
+Plug 'tommcdo/vim-lion'                           " A simple alignment operator for Vim text editor
+Plug 'sjl/vitality.vim'                           " Integrate vim nicely with tmux and iterm2
 Plug 'Shougo/denite.nvim'                         " Dark powered asynchronous unite all interfaces for Neovim
 Plug 'jremmen/vim-ripgrep'                        " Rapid string search through files
 Plug 'metakirby5/codi.vim'                        " Interactive scratchpad
+Plug 'tpope/vim-projectionist'                    " projectionist.vim: project configuration
+Plug 'tpope/vim-dispatch'                         " Asynchronous build and test dispatcher
+"Plug 'radenling/vim-dispatch-neovim'              " Adds neovim support to vim-dispatch
+Plug 'chrisbra/Colorizer'                         " color hex codes and color names
+"Plug 'janko-m/vim-test'                           " Run your tests at the speed of thought
+"
+Plug 'benmills/vimux'                             " vim plugin to interact with tmux
+Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
+Plug 'christoomey/vim-tmux-navigator'
+
+"Plug 'vim-jp/vital.vim'
+"Plug 'haya14busa/vital-string-interpolation'
 
 " Git
 Plug 'airblade/vim-gitgutter'                     " Display git diff in margin
@@ -101,36 +119,39 @@ Plug 'tomasr/molokai'                             " Molokai theme
 Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for handling dictionaries
             \ { 'branch': 'next',
             \ 'do': 'bash install.sh',
+            \ 'for': [ 'Haskell' ]
             \ }
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
+"Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
-Plug 'Shougo/deoplete.nvim',                      " Dark powered asynchronous completion framework for neovim/Vim8
-            \ { 'do' : ':UpdateRemotePlugin'
-            \ }
+"Plug 'Shougo/deoplete.nvim',                      " Dark powered asynchronous completion framework for neovim/Vim8
+            "\ { 'do' : ':UpdateRemotePlugin'
+            "\ }
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
 Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
 Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
+Plug 'roxma/nvim-completion-manager'              " Fast, Extensible, Async Completion Framework for Neovim
 
 " Language Specific Plugins
+"   VIMRC
+Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
 "   HASKELL
 Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
-Plug 'bitc/lushtags'                              " Create ctags comptaible tags files for Haskell
-
+Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
                                                   " underlying source code.
 "   GO
-Plug 'fatih/vim-go',                              " Go development plugin for Vim
-            \ { 'do': ':GoInstallBinaries' }
-Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
-            \ { 'do': 'make' }
-Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
+"Plug 'fatih/vim-go',                              " Go development plugin for Vim
+            "\ { 'do': ':GoInstallBinaries' }
+""Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
+            ""\ { 'do': 'make' }
+"Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
 
 "   ELM
-Plug 'Elmcast/elm-vim'	                          " Elm settings
+Plug 'Elmcast/elm-vim'                            " Elm settings
 
 "   HTML/JS/CSS
 Plug 'othree/javascript-libraries-syntax.vim',    " Syntax for JavaScript libraries
-	    \ { 'for':
-	    \ ['javascript', 'javascript.jsx'] }
+       \ { 'for':
+       \ ['javascript', 'javascript.jsx'] }
 Plug 'othree/html5.vim'                           " HTML5 omnicomplete and syntax
 Plug 'tpope/vim-surround'                         " Wrap current words in tags, quotes, etc..
 Plug 'ap/vim-css-color'                           " Preview colors in css
@@ -139,8 +160,15 @@ Plug 'ap/vim-css-color'                           " Preview colors in css
 Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshrc files
 
 "   RUBY
-Plug 'tpope/vim-ruby'                             " Syntax and Tools for Ruby
+Plug 'vim-ruby/vim-ruby'                          " Syntax and Tools for Ruby
 
+
+"Plug 'fishbullet/deoplete-ruby',                  " Deoplete sources for ruby language
+            "\ { 'for': 'ruby' }
+"Plug 'skalnik/vim-vroom'                          " A vim plugin for running your Ruby tests
+
+"   NIM (experimental)
+"
 " Status Line
 Plug 'vim-airline/vim-airline'                    " Status line alternative
 Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
@@ -151,23 +179,67 @@ call plug#end()
 
 "   Settings {{{
 " ------------------------------------
+" simnalanburt/vim-mundo
+" benmills/vimux
+"
+let g:VimuxHeight = "10"
+" Return to last cursor position when reoponing a file
+augroup preserve_last_cursor_position
+    autocmd!
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup END
+let g:mundo_close_on_revert = 1                   " Set to 1 to automatically close the Mundo windows when revertin
 
-" junegunn/vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
+" vim-ruby?vim-ruby
+let g:ruby_indent_block_style = 'do'
+"let g:ruby_fold = 1
+let g:ruby_spellcheck_strings = 1
+" airblade/vim-root
+let g:rooter_patterns = [ '.learn' ]
+
+" tpope/vim-projectionist
+"
+let g:projectionist_heuristics = {
+            \ 'lib/*.rb': {
+            \   'lib/*.rb': {
+            \     'alternate': 'spec/{}_spec.rb'
+            \   },
+            \   'spec/*_spec.rb': {
+            \     'alternate': 'lib/{}.rb',
+				\     'dispatch': 'rspec'
+            \   }
+            \   },
+				\ '*.rb': {
+				\	 '*.rb': {
+				\		'alternate': 'spec/{}_spec.rb'
+				\	 },
+            \   'spec/*_spec.rb': {
+            \     'alternate': '{}.rb',
+				\     'dispatch': 'rspec'
+            \	 }
+				\ }
+				\}
+" See below for extending this for use with Flatiron's learning labs
+
+" Detect when inside Flatiron's learning lab
+" junegunn/vim-easy-align Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" vim-syntastic/syntastic
-let g:syntastic_always_populate_loc_list = 1      " Population the |location-list| with errors for the associated buffer
-let g:syntastic_auto_loc_list = 1
+" janko-m/vim-test
+"let test#strategy = "dispatch"
+"let test#ruby#bundle_exec = 0
+" vim-syntastic/syntastic let g:syntastic_always_populate_loc_list = 1
+
+" Population the |location-list| with errors for the associated buffer let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
-" scrooloose/erdtree
+" scrooloose/nerdtree
 autocmd StdinReadPre * let s:std_in=1             " Open NERDTree if nvim opens on a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 let NERDTreeIgnore=['.DS_Store']
+let NERDTreeRespectWildIgnore = 1                 " Refer to wildignore for additional files
 let NERDTreeHighlightCursorLine = 1               " Highlight the selected entry in the tree
 let NERDTreeQuitOnOpen = 0                        " Don't quit NERDtree when opening a file
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -239,21 +311,21 @@ let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'], }
                                                   " Configure LSP to use haskell-ide-engine
 " vim-airline/vim-airline
 let g:airline#extensions#quickfix#location_text = 'Location'
-                                                  " Enable location in quickfix
+                                                  " Define the loclist label
 let g:airline#extensions#quickfix#quickfix_text =  'Quickfix'
                                                   " Define the quickfix label
-let g:airline#extensions#tabline#enabled = 1      " Enable enanced tabline
+let g:airline#extensions#tabline#enabled = 1      " Enable enhanced tabline
 let g:airline_powerline_fonts = 1                 " Use powerline symbols
 
 " ryanoasis/vim-devicons
-let g:webdevicons_enable = 1                      " enable the plugin
+let g:webdevicons_enable= 1                       " enable the plugin
 let g:webdevicons_enable_nerdtree = 1             " adding the flags to NERDTree
 let g:webdevicons_enable_airline_tabline = 1      " adding to vim-airline's tabline
 let g:webdevicons_enable_airline_statusline = 1   " adding to vim-airline's statusline
 
 " Shougo/deoplete.vim {{{
 set completeopt=longest,menuone                   " auto complete setting
-let g:deoplete#enable_at_startup = 1	           " enable deoplete at startup
+let g:deoplete#enable_at_startup = 1              " enable deoplete at startup
 let g:deoplete#enable_smart_case = 1              " When a capital letter is
                                                   " included in input, deoplete does
                                                   " not ignore the upper- and lowercase.
@@ -272,7 +344,8 @@ let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
 let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
-
+                                                   " Customize the labels for
+                                                   " neomake
 let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
                                                    " For GOLANG
 let g:neomake_go_gometalinter_maker = {
@@ -329,11 +402,13 @@ set backspace+=start                               " ┘ everything.
 set showcmd                                        " Show the command being typed.
 set cmdheight=2                                    " Set the command section height to two lines;
                                                    " useful when there are multiple error messages
+"set inccommand=nosplit                             " Neovim highlight
 " set colorcolumn=80                               " Set a vertical line at the 80th column.
 let &colorcolumn="80,".join(range(120,999),",")    " Set margins at 80 and 120 columns
 hi ColorColumn ctermbg=235 guibg=#2c2d27
 set cursorline                                     " Highlight the current line
 hi CursorLine cterm=bold gui=bold
+hi Comment cterm=italic gui=italic
 "set cpoptions+=$                                  " When making a change, don't
                                                    " redisplay the line, and
                                                    " instead, put a `$` sign at
@@ -414,7 +489,7 @@ set gdefault                                       " Default add g flag to
                                                    " search/replace. Add `g` to
                                                    " toggle.
 set hlsearch                                       " Highlight all search matches
-hi Search ctermbg=none guibg=none cterm=bold gui=bold
+hi Search cterm=bold gui=bold
 set ignorecase                                     " Ignore case in search patterns.
 set incsearch                                      " Highlight search pattern as
                                                    " it is being typed.
@@ -485,7 +560,6 @@ endif
 
 " Macros
 " ------------------------------------
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |     exe "normal! g'\"" | endif
 
 " Modify the highlighting of nontext, specialkey and extrawhitespaces
 augroup vimrc
@@ -493,6 +567,12 @@ augroup vimrc
     autocmd vimrc ColorScheme * :hi NonText ctermfg=236
     autocmd vimrc ColorScheme * :hi SpecialKey ctermfg=23
     autocmd vimrc ColorScheme * :hi ExtraWhitespace ctermbg=red guibg=red     " Show trailing whitespace
+augroup END
+
+" Return to last cursor position when reoponing a file
+augroup preserve_last_cursor_position
+    autocmd!
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
 
 " Automatically reload nvim's configuration files when changes are saved
@@ -510,14 +590,27 @@ augroup END
 
 " Strip trailing whitespaces except for markdown files (might screw up formatting)
 augroup strip_trailing_whitespaces
-  let excludedFileTypes = [
-   \ "markdown",
-   \ "mkd.markdown"
-   \ ]
-  autocmd!
+    let excludedFileTypes = [
+                \ "markdown",
+                \ "mkd.markdown"
+                \ ]
+    autocmd!
   " Only strip the trailing whitespaces on save if the file type is not in
   " the aforementioned excludedFileType variable
-  autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :%s/\s\+$//e
+    autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :%s/\s\+$//e
+augroup END
+
+" The following setup will automatically run tests when a test file or its alternate application file is saved:
+"augroup test
+    "autocmd!
+    "autocmd BufWrite * if test#exists() | TestFile endif
+	 "
+"augroup END
+
+" ruby
+augroup rubyft
+    autocmd!
+    autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
 augroup END
 
 " This function will open a file in the current buffer if it is empty
@@ -529,34 +622,66 @@ function! OpenInSplitIfBufferDirty(file)
     exec 'sp' a:file
   endif
 endfunction
-
 " Re|Mappings
 " ------------------------------------
+" Define <leader> as ','
+let mapleader="\<space>"
+
+" <leader>t will call :Dispatch
+nnoremap <leader>t :Dispatch<CR>
+
 " Remap the ':' with ';' for faster access to cmdline mode
 noremap ; :
+
 " Reading and Writing Protected Files
 cmap w!! w !sudo tee > /dev/null %
+
 " [\* ] Search and replace the word under the cursor.
 map <leader>* :%s/\<<C-r><C-w>\>//<Left>
+
 " [\xs] Clear search terms.
 map <leader>xs <Esc>:noh<CR>
+
+" [\l] will run the the learn testing tool in vimux
+"
+map <leader>lr :call VimuxRunCommand("unbuffer learn --fail-fast \| less -m -X -g -G -i -J --underline-special -p Failure")<CR>
+map <leader>li :call VimuxInspectRunner()<CR>
+map <leader>lq :call VimuxCloseRunner()<CR>
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " Insert a newline without going into insert mode
+"
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
+
 " <Tab> to switch to next buffer, <Shift><Tab> to the previous one
 nnoremap <Tab> :bnext!<CR>
 nnoremap <S-Tab> :bprev!<CR>
+
 " Window navigation using <C-[h,j,k,l]>
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-h> <C-w>h
+
 " [\v] edit the config files
 nnoremap <silent> <leader>vi :tabnew <bar> :e $HOME/.config/nvim/init.vim<CR>
+
+" Use Alt {1,2 ...} to to tab by number
+noremap <A-1> 1gt
+noremap <A-2> 2gt
+noremap <A-3> 3gt
+noremap <A-4> 4gt
+noremap <A-5> 5gt
+noremap <A-6> 6gt
+noremap <A-7> 7gt
+noremap <A-8> 8gt
+noremap <A-9> 9gt
+noremap <A-0> :tablast<cr>
+
 " I fat finger quite a bit
 if has('user_commands')
  command! -bang -complete=file -nargs=? E e<bang> <args>
@@ -569,6 +694,7 @@ if has('user_commands')
  command! -bang Wa wa<bang>
  command! -bang WA wa<bang>
 endif
+
 " Use the language server functionality
 noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
 noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
