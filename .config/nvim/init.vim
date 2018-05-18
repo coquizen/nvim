@@ -1,9 +1,5 @@
 " Author: Ian G Canino
 "
-"
-"
-"
-"
 " Description: an opinionated configuration for neovim based on my usaage
 " for Haskell, Swift, and general fullstack development on MacOS
 "
@@ -91,13 +87,17 @@ Plug 'tpope/vim-dispatch'                         " Asynchronous build and test 
 "Plug 'radenling/vim-dispatch-neovim'              " Adds neovim support to vim-dispatch
 Plug 'chrisbra/Colorizer'                         " color hex codes and color names
 "Plug 'janko-m/vim-test'                           " Run your tests at the speed of thought
+Plug 'Shougo/neosnippet.vim'                      " neo-snippet plugin
+Plug 'honza/vim-snippets'	                       " vim-snipmate default snippets (Previously snipmate-snippets)
+"Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
 "
 Plug 'benmills/vimux'                             " vim plugin to interact with tmux
 Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
 Plug 'christoomey/vim-tmux-navigator'
-
+Plug 'zenbro/mirror.vim'								  " Simultaneously work on two files at once
 "Plug 'vim-jp/vital.vim'
 "Plug 'haya14busa/vital-string-interpolation'
+Plug 'sbdchd/neoformat'	                          " A (Neo)vim plugin for formatting code.
 
 " Git
 Plug 'airblade/vim-gitgutter'                     " Display git diff in margin
@@ -123,26 +123,34 @@ Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for h
             \ }
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
-"Plug 'Shougo/deoplete.nvim',                      " Dark powered asynchronous completion framework for neovim/Vim8
-            "\ { 'do' : ':UpdateRemotePlugin'
-            "\ }
+Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugin'}
+																  " Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
 Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
-Plug 'roxma/nvim-completion-manager'              " Fast, Extensible, Async Completion Framework for Neovim
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 
 " Language Specific Plugins
+"	 SQL
+Plug 'joereynolds/SQHell.vim'                     " An SQL wrapper for vim
 "   VIMRC
 Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
+
+" Markdown
+Plug 'suan/vim-instant-markdown'                  " live view of markdown in browser
+
 "   HASKELL
 Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
 Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
                                                   " underlying source code.
 "   GO
-"Plug 'fatih/vim-go',                              " Go development plugin for Vim
-            "\ { 'do': ':GoInstallBinaries' }
-""Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
-            ""\ { 'do': 'make' }
+Plug 'fatih/vim-go',                              " Go development plugin for Vim
+            \ { 'do': ':GoInstallBinaries' }
+Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
+            \ { 'do': 'make' }
 "Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
 
 "   ELM
@@ -161,7 +169,9 @@ Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshr
 
 "   RUBY
 Plug 'vim-ruby/vim-ruby'                          " Syntax and Tools for Ruby
+Plug 'tpope/vim-rails'									  " rails.vim: Ruby on Rails power tools
 
+Plug 'joker1007/vim-ruby-heredoc-syntax'			  " vim plugin for highliting code in ruby here document
 
 "Plug 'fishbullet/deoplete-ruby',                  " Deoplete sources for ruby language
             "\ { 'for': 'ruby' }
@@ -179,46 +189,40 @@ call plug#end()
 
 "   Settings {{{
 " ------------------------------------
-" simnalanburt/vim-mundo
 " benmills/vimux
-"
 let g:VimuxHeight = "10"
-" Return to last cursor position when reoponing a file
-augroup preserve_last_cursor_position
-    autocmd!
-    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-augroup END
+
+" simnalamburt/vim-mundo
 let g:mundo_close_on_revert = 1                   " Set to 1 to automatically close the Mundo windows when revertin
 
 " vim-ruby?vim-ruby
 let g:ruby_indent_block_style = 'do'
-"let g:ruby_fold = 1
 let g:ruby_spellcheck_strings = 1
+
 " airblade/vim-root
 let g:rooter_patterns = [ '.learn' ]
 
 " tpope/vim-projectionist
-"
-let g:projectionist_heuristics = {
-            \ 'lib/*.rb': {
-            \   'lib/*.rb': {
-            \     'alternate': 'spec/{}_spec.rb'
-            \   },
-            \   'spec/*_spec.rb': {
-            \     'alternate': 'lib/{}.rb',
-				\     'dispatch': 'rspec'
-            \   }
-            \   },
-				\ '*.rb': {
-				\	 '*.rb': {
-				\		'alternate': 'spec/{}_spec.rb'
-				\	 },
-            \   'spec/*_spec.rb': {
-            \     'alternate': '{}.rb',
-				\     'dispatch': 'rspec'
-            \	 }
-				\ }
-				\}
+"let g:projectionist_heuristics = {
+            "\ 'app/**/*.rb': {
+            "\   'app/**/*.rb': {
+            "\     'alternate': 'test/{}_spec.rb'
+            "\   },
+            "\   'test/**/*_spec.rb': {
+            "\     'alternate': 'lib/{}.rb',
+            "\     'dispatch': 'rspec'
+            "\   }
+            "\   },
+            "\ '*.rb': {
+            "\   '*.rb': {
+            "\     'alternate': 'test/{}_spec.rb'
+            "\   },
+            "\   'test/*_spec.rb': {
+            "\     'alternate': '{}.rb',
+            "\     'dispatch': 'rspec'
+            "\   }
+            "\ }
+            "\}
 " See below for extending this for use with Flatiron's learning labs
 
 " Detect when inside Flatiron's learning lab
@@ -230,11 +234,16 @@ nmap ga <Plug>(EasyAlign)
 " janko-m/vim-test
 "let test#strategy = "dispatch"
 "let test#ruby#bundle_exec = 0
-" vim-syntastic/syntastic let g:syntastic_always_populate_loc_list = 1
+"
+" vim-syntastic/syntasticq
 
-" Population the |location-list| with errors for the associated buffer let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+" Setup for javascript
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'npm run lint --'
 " scrooloose/nerdtree
 autocmd StdinReadPre * let s:std_in=1             " Open NERDTree if nvim opens on a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
@@ -247,7 +256,7 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let NERDTreeMinimalUI = 1                         " Pretty NERDTree UI
 let NERDTreeDirArrows = 1
 
-" scrooloose/nercommenter
+" scrooloose/nerdtreecommenter
 let g:NERDCompactSexyComs = 1                     " Use compact syntax for prettified multi-line comments
 
 " emajutsushi/tagbar
@@ -285,10 +294,15 @@ let g:tagbar_type_haskell = {
 \ }
 
 " fatih/vim-go
-let g:go_fmt_command = "goimports"                " define which tool is used to gofmt
-let g:go_highlight_functions = 1                  " Highlight function and method declarations.
-let g:go_highlight_operators = 1                  " Highlight operators such as `:=` , `==`, `-=`, etc.
-let g:go_highlight_build_constraints = 1          " Highlights build constraints.
+let g:go_fmt_command = "goimports"                " duto import packages when file is saved
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
 let g:go_term_enabled = 1                         " This option is Neovim only. Use it
                                                   " to change the behavior of the test
                                                   " commands. If set to 1 it opens the
@@ -305,6 +319,7 @@ let g:go_addtags_transform = "camelcase"          " By default 'snakecase' is us
                                                   " Possible values are: ["snakecase", camelcase"].
 let g:go_auto_sameids = 1                         " This option will highlight all uses of
                                                   " the identifier under the cursor (:GoSameIds) automatically.
+let g:go_auto_type_info = 1                       " Automatically display type of the variable under cursor on the status line
 
 " autozimu/LanguageClient-neovim
 let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'], }
@@ -325,7 +340,9 @@ let g:webdevicons_enable_airline_statusline = 1   " adding to vim-airline's stat
 
 " Shougo/deoplete.vim {{{
 set completeopt=longest,menuone                   " auto complete setting
-let g:deoplete#enable_at_startup = 1              " enable deoplete at startup
+if has('nvim')
+	 let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
+endif
 let g:deoplete#enable_smart_case = 1              " When a capital letter is
                                                   " included in input, deoplete does
                                                   " not ignore the upper- and lowercase.
@@ -383,7 +400,7 @@ let g:neomake_go_gometalinter_maker = {
 set nocompatible                                   " Don't make nvim vi-compatible
 set clipboard=unnamed                              " Setting to integrate with mac os clipboard
 set mouse=a                                        " Enable mouse over all modesa
-
+set shell=bash\ -i                                 " for the live markdown plugin
 " Colors and Fonts
 " ------------------------------------
 if (has("termguicolors"))                          " ┐ Attempt to set
@@ -604,13 +621,15 @@ augroup END
 "augroup test
     "autocmd!
     "autocmd BufWrite * if test#exists() | TestFile endif
-	 "
+    "
 "augroup END
 
 " ruby
 augroup rubyft
     autocmd!
     autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
+	 autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
+	 autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
 augroup END
 
 " This function will open a file in the current buffer if it is empty
@@ -626,6 +645,10 @@ endfunction
 " ------------------------------------
 " Define <leader> as ','
 let mapleader="\<space>"
+
+" Vmap for maintain Visual Mode after shifting > and <
+vmap < <gv
+vmap > >gv
 
 " <leader>t will call :Dispatch
 nnoremap <leader>t :Dispatch<CR>
