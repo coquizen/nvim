@@ -1,7 +1,9 @@
 " Author: Ian G Canino
 "
 " Description: an opinionated configuration for neovim based on my usaage
-" for Haskell, Swift, and general fullstack development on MacOS
+" for Haskell, Swift, and general fullstack development on MacOS. Despite the
+" massive list of plugins in this configuration, I highly I recommend reading
+" 'Practical Vim: Edit Text at the Speed of Thought'
 "
 " Plugin Manager: I use junegunn's 'Minimalist Vim Plugin Manager'
 "    https://github.com/junegunn/vim-plug
@@ -12,18 +14,18 @@
 "     ccorbi -- https://github.com/ccorbi/lightdotfiles
 "     John Mendonça -- https://github.com/johnmendonca/nvim (Haskell)
 "
-"       HASKELL
-"         https://wiki.haskell.org/Vim
-"         https://github.com/haskell/haskell-ide-engine
+"     HASKELL
+"       https://wiki.haskell.org/Vim
+"       https://github.com/haskell/haskell-ide-engine
 "
-"       GOLANG
-"         https://medium.com/@ambot/neovim-and-go-8f32e6390f71
+"     GOLANG
+"       https://medium.com/@ambot/neovim-and-go-8f32e6390f71
 "
-"       ELM
-"         https://github.com/ElmCast/.vim
+"     ELM
+"       https://github.com/ElmCast/.vim
 "
-"       RUBY
-"         https://github.com/gacha/nvim-config
+"     RUBY
+"       https://github.com/gacha/nvim-config
 "
 " Sections:
 "   Plugins:
@@ -57,6 +59,7 @@
 "     Plugin Initialization
 " ------------------------------------
 "
+" Install junegunn's plugin manager if not already installed.
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -77,31 +80,31 @@ Plug 'airblade/vim-rooter'                        " Changes Vim working director
 Plug 'junegunn/vim-easy-align'                    " A vim alignment plugin
 Plug 'ervandew/supertab'                          " Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
 Plug 'simnalamburt/vim-mundo'                     " Vim undo tree visualizer
-Plug 'tommcdo/vim-lion'                           " A simple alignment operator for Vim text editor
+"Plug 'tommcdo/vim-lion'                           " A simple alignment operator for Vim text editor
 Plug 'sjl/vitality.vim'                           " Integrate vim nicely with tmux and iterm2
-Plug 'Shougo/denite.nvim'                         " Dark powered asynchronous unite all interfaces for Neovim
+"Plug 'Shougo/denite.nvim'                         " Dark powered asynchronous unite all interfaces for Neovim
 Plug 'jremmen/vim-ripgrep'                        " Rapid string search through files
-Plug 'metakirby5/codi.vim'                        " Interactive scratchpad
-Plug 'tpope/vim-projectionist'                    " projectionist.vim: project configuration
-Plug 'tpope/vim-dispatch'                         " Asynchronous build and test dispatcher
+"Plug 'metakirby5/codi.vim'                        " Interactive scratchpad
+"Plug 'tpope/vim-projectionist'                    " projectionist.vim: project configuration
+"Plug 'tpope/vim-dispatch'                         " Asynchronous build and test dispatcher
 "Plug 'radenling/vim-dispatch-neovim'              " Adds neovim support to vim-dispatch
 Plug 'chrisbra/Colorizer'                         " color hex codes and color names
 "Plug 'janko-m/vim-test'                           " Run your tests at the speed of thought
-Plug 'Shougo/neosnippet.vim'                      " neo-snippet plugin
-Plug 'honza/vim-snippets'	                       " vim-snipmate default snippets (Previously snipmate-snippets)
+"Plug 'Shougo/neosnippet.vim'                      " neo-snippet plugin
+"Plug 'honza/vim-snippets'                        " vim-snipmate default snippets (Previously snipmate-snippets)
 "Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
-"
+Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
+
+" Terminal interaction
 Plug 'benmills/vimux'                             " vim plugin to interact with tmux
-Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'zenbro/mirror.vim'								  " Simultaneously work on two files at once
+"Plug 'christoomey/vim-tmux-navigator'
+Plug 'zenbro/mirror.vim'                  " Simultaneously work on two files at once
 "Plug 'vim-jp/vital.vim'
 "Plug 'haya14busa/vital-string-interpolation'
-Plug 'sbdchd/neoformat'	                          " A (Neo)vim plugin for formatting code.
 
 " Git
 Plug 'airblade/vim-gitgutter'                     " Display git diff in margin
-Plug 'junegunn/gv.vim'                            " Git commit browser
+"Plug 'junegunn/gv.vim'                            " Git commit browser
 Plug 'tpope/vim-fugitive'                         " a Git wrapper so awesome, it should be illegal
 
 " Colorschemes
@@ -124,17 +127,17 @@ Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for h
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
 Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugin'}
-																  " Dark powered asynchronous completion framework for neovim/Vim8
+					                                   " Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
-Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+"Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
+"Plug 'roxma/vim-hug-neovim-rpc'
+"Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
+"Plug 'Shougo/neosnippet.vim'
+"Plug 'Shougo/neosnippet-snippets'
 
 " Language Specific Plugins
-"	 SQL
+
+"  SQL
 Plug 'joereynolds/SQHell.vim'                     " An SQL wrapper for vim
 "   VIMRC
 Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
@@ -170,15 +173,13 @@ Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshr
 "   RUBY
 Plug 'vim-ruby/vim-ruby'                          " Syntax and Tools for Ruby
 Plug 'tpope/vim-rails'									  " rails.vim: Ruby on Rails power tools
-
+Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
 Plug 'joker1007/vim-ruby-heredoc-syntax'			  " vim plugin for highliting code in ruby here document
 
 "Plug 'fishbullet/deoplete-ruby',                  " Deoplete sources for ruby language
             "\ { 'for': 'ruby' }
 "Plug 'skalnik/vim-vroom'                          " A vim plugin for running your Ruby tests
 
-"   NIM (experimental)
-"
 " Status Line
 Plug 'vim-airline/vim-airline'                    " Status line alternative
 Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
@@ -341,7 +342,7 @@ let g:webdevicons_enable_airline_statusline = 1   " adding to vim-airline's stat
 " Shougo/deoplete.vim {{{
 set completeopt=longest,menuone                   " auto complete setting
 if has('nvim')
-	 let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
+   let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
 endif
 let g:deoplete#enable_smart_case = 1              " When a capital letter is
                                                   " included in input, deoplete does
@@ -628,8 +629,8 @@ augroup END
 augroup rubyft
     autocmd!
     autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
-	 autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
-	 autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
+   autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
+   autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
 augroup END
 
 " This function will open a file in the current buffer if it is empty
