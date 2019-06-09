@@ -94,6 +94,7 @@ Plug 'chrisbra/Colorizer'                         " color hex codes and color na
 "Plug 'honza/vim-snippets'                        " vim-snipmate default snippets (Previously snipmate-snippets)
 "Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
 Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
+Plug 'lambdalisue/suda.vim'                       " Until neovim fixes sudo, this is a workaround
 
 " Terminal interaction
 Plug 'benmills/vimux'                             " vim plugin to interact with tmux
@@ -147,7 +148,8 @@ Plug 'suan/vim-instant-markdown'                  " live view of markdown in bro
 
 "   HASKELL
 Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
-Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
+"Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
+Plug 'neovimhaskell/haskell-vim'                   " Custom Haskell Vimscripts
                                                   " underlying source code.
 "   GO
 Plug 'fatih/vim-go',                              " Go development plugin for Vim
@@ -201,7 +203,7 @@ let g:ruby_indent_block_style = 'do'
 let g:ruby_spellcheck_strings = 1
 
 " airblade/vim-root
-let g:rooter_patterns = [ '.learn' ]
+"let g:rooter_patterns = [ '.learn' ]
 
 " tpope/vim-projectionist
 "let g:projectionist_heuristics = {
@@ -261,39 +263,39 @@ let NERDTreeDirArrows = 1
 let g:NERDCompactSexyComs = 1                     " Use compact syntax for prettified multi-line comments
 
 " emajutsushi/tagbar
-autocmd FileType haskell nested :TagbarOpen       " Configure tagbar for hasktags
-let g:tagbar_type_haskell = {
-    \ 'ctagsbin'  : 'hasktags',
-    \ 'ctagsargs' : '-x -c -o-',
-    \ 'kinds'     : [
-        \  'm:modules:0:1',
-        \  'd:data: 0:1',
-        \  'd_gadt: data gadt:0:1',
-        \  't:type names:0:1',
-        \  'nt:new types:0:1',
-        \  'c:classes:0:1',
-        \  'cons:constructors:1:1',
-        \  'c_gadt:constructor gadt:1:1',
-        \  'c_a:constructor accessors:1:1',
-        \  'ft:function types:1:1',
-        \  'fi:function implementations:0:1',
-        \  'o:others:0:1'
-    \ ],
-    \ 'sro'        : '.',
-    \ 'kind2scope' : {
-        \ 'm' : 'module',
-        \ 'c' : 'class',
-        \ 'd' : 'data',
-        \ 't' : 'type'
-    \ },
-    \ 'scope2kind' : {
-        \ 'module' : 'm',
-        \ 'class'  : 'c',
-        \ 'data'   : 'd',
-        \ 'type'   : 't'
-    \ }
-\ }
-
+"autocmd FileType haskell nested :TagbarOpen       " Configure tagbar for hasktags
+"let g:tagbar_type_haskell = {
+"    \ 'ctagsbin'  : 'hasktags',
+"    \ 'ctagsargs' : '-x -c -o-',
+"    \ 'kinds'     : [
+"        \  'm:modules:0:1',
+"        \  'd:data: 0:1',
+"        \  'd_gadt: data gadt:0:1',
+"        \  't:type names:0:1',
+"        \  'nt:new types:0:1',
+"        \  'c:classes:0:1',
+"        \  'cons:constructors:1:1',
+"        \  'c_gadt:constructor gadt:1:1',
+"        \  'c_a:constructor accessors:1:1',
+"        \  'ft:function types:1:1',
+"        \  'fi:function implementations:0:1',
+"        \  'o:others:0:1'
+"    \ ],
+"    \ 'sro'        : '.',
+"    \ 'kind2scope' : {
+"        \ 'm' : 'module',
+"        \ 'c' : 'class',
+"        \ 'd' : 'data',
+"        \ 't' : 'type'
+"    \ },
+"    \ 'scope2kind' : {
+"        \ 'module' : 'm',
+"        \ 'class'  : 'c',
+"        \ 'data'   : 'd',
+"        \ 'type'   : 't'
+"    \ }
+"\ }
+"
 " fatih/vim-go
 let g:go_fmt_command = "goimports"                " duto import packages when file is saved
 let g:go_highlight_build_constraints = 1
@@ -401,7 +403,8 @@ let g:neomake_go_gometalinter_maker = {
 set nocompatible                                   " Don't make nvim vi-compatible
 set clipboard=unnamed                              " Setting to integrate with mac os clipboard
 set mouse=a                                        " Enable mouse over all modesa
-set shell=bash\ -i                                 " for the live markdown plugin
+"set shell=bash/ -i                                  " for the live markdown plugin
+set rtp+=$GOPATH/src/golang.org/x/lint/misc/vim    " Running :Lint will run golint
 " Colors and Fonts
 " ------------------------------------
 if (has("termguicolors"))                          " ┐ Attempt to set
@@ -633,6 +636,10 @@ augroup rubyft
    autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
 augroup END
 
+augroup golang
+	 autocmd!
+	 autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+augroup END
 " This function will open a file in the current buffer if it is empty
 " otherwise will open in a split pane.
 function! OpenInSplitIfBufferDirty(file)
@@ -644,7 +651,7 @@ function! OpenInSplitIfBufferDirty(file)
 endfunction
 " Re|Mappings
 " ------------------------------------
-" Define <leader> as ','
+" Define <leader> as '\'
 let mapleader="\<space>"
 
 " Vmap for maintain Visual Mode after shifting > and <
@@ -655,10 +662,11 @@ vmap > >gv
 nnoremap <leader>t :Dispatch<CR>
 
 " Remap the ':' with ';' for faster access to cmdline mode
-noremap ; :
+"
+"noremap ; :
 
 " Reading and Writing Protected Files
-cmap w!! w !sudo tee > /dev/null %
+cmap w!! w suda://%
 
 " [\* ] Search and replace the word under the cursor.
 map <leader>* :%s/\<<C-r><C-w>\>//<Left>
@@ -668,16 +676,16 @@ map <leader>xs <Esc>:noh<CR>
 
 " [\l] will run the the learn testing tool in vimux
 "
-map <leader>lr :call VimuxRunCommand("unbuffer learn --fail-fast \| less -m -X -g -G -i -J --underline-special -p Failure")<CR>
-map <leader>li :call VimuxInspectRunner()<CR>
-map <leader>lq :call VimuxCloseRunner()<CR>
+"map <leader>lr :call VimuxRunCommand("unbuffer learn --fail-fast \| less -m -X -g -G -i -J --underline-special -p Failure")<CR>
+"map <leader>li :call VimuxInspectRunner()<CR>
+"map <leader>lq :call VimuxCloseRunner()<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+
 " Insert a newline without going into insert mode
-"
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
