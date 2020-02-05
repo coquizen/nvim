@@ -75,13 +75,13 @@ Plug 'mhinz/vim-startify'                         " A nice startup page
 Plug 'scrooloose/nerdtree'                        " A tool to navigate directory tree
 Plug 'scrooloose/nerdcommenter'                   " A collection of comment functions
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'    " Extra syntax and highlight for nerdtree files
-Plug 'majutsushi/tagbar'                          " Displays tags on the right side of the screen and lets you navigate through them.
-Plug 'airblade/vim-rooter'                        " Changes Vim working directory to project root (identified by presence of known directory or file).
-Plug 'junegunn/vim-easy-align'                    " A vim alignment plugin
-Plug 'ervandew/supertab'                          " Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
+"Plug 'majutsushi/tagbar'                          " Displays tags on the right side of the screen and lets you navigate through them.
+"Plug 'airblade/vim-rooter'                        " Changes Vim working directory to project root (identified by presence of known directory or file).
+"Plug 'junegunn/vim-easy-align'                    " A vim alignment plugin
+"Plug 'ervandew/supertab'                          " Tab completion that integrates with neco-ghc-lushtags to let you do language-aware tab completion.
 Plug 'simnalamburt/vim-mundo'                     " Vim undo tree visualizer
 "Plug 'tommcdo/vim-lion'                           " A simple alignment operator for Vim text editor
-Plug 'sjl/vitality.vim'                           " Integrate vim nicely with tmux and iterm2
+"Plug 'sjl/vitality.vim'                           " Integrate vim nicely with tmux and iterm2
 "Plug 'Shougo/denite.nvim'                         " Dark powered asynchronous unite all interfaces for Neovim
 Plug 'jremmen/vim-ripgrep'                        " Rapid string search through files
 "Plug 'metakirby5/codi.vim'                        " Interactive scratchpad
@@ -93,20 +93,20 @@ Plug 'chrisbra/Colorizer'                         " color hex codes and color na
 "Plug 'Shougo/neosnippet.vim'                      " neo-snippet plugin
 "Plug 'honza/vim-snippets'                        " vim-snipmate default snippets (Previously snipmate-snippets)
 "Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
-Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
-Plug 'lambdalisue/suda.vim'                       " Until neovim fixes sudo, this is a workaround
+"Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
+"Plug 'lambdalisue/suda.vim'                       " Until neovim fixes sudo, this is a workaround
 
 " Terminal interaction
-Plug 'benmills/vimux'                             " vim plugin to interact with tmux
+"Plug 'benmills/vimux'                             " vim plugin to interact with tmux
 "Plug 'christoomey/vim-tmux-navigator'
-Plug 'zenbro/mirror.vim'                  " Simultaneously work on two files at once
+Plug 'zenbro/mirror.vim'                           " Simultaneously work on two files at once
 "Plug 'vim-jp/vital.vim'
 "Plug 'haya14busa/vital-string-interpolation'
 
 " Git
 Plug 'airblade/vim-gitgutter'                     " Display git diff in margin
 "Plug 'junegunn/gv.vim'                            " Git commit browser
-Plug 'tpope/vim-fugitive'                         " a Git wrapper so awesome, it should be illegal
+"Plug 'tpope/vim-fugitive'                         " a Git wrapper so awesome, it should be illegal
 
 " Colorschemes
 Plug 'rakr/vim-one'                               " 24bit
@@ -130,7 +130,7 @@ Plug 'neomake/neomake'                            " Asynchronous linting and mak
 Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugin'}
 					                                   " Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
-"Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
+"Plug 'sheerun/vim-polygot'                       " A solid language pack for Vim.
 "Plug 'roxma/vim-hug-neovim-rpc'
 "Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
 "Plug 'Shougo/neosnippet.vim'
@@ -139,15 +139,15 @@ Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplet
 " Language Specific Plugins
 
 "  SQL
-Plug 'joereynolds/SQHell.vim'                     " An SQL wrapper for vim
+"Plug 'joereynolds/SQHell.vim'                     " An SQL wrapper for vim
 "   VIMRC
-Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
+"Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
 
 " Markdown
 Plug 'suan/vim-instant-markdown'                  " live view of markdown in browser
 
 "   HASKELL
-Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
+"Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
 "Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
 Plug 'neovimhaskell/haskell-vim'                   " Custom Haskell Vimscripts
                                                   " underlying source code.
@@ -159,7 +159,7 @@ Plug 'zchee/deoplete-go',                         " Asynchronous Go completion f
 "Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
 
 "   ELM
-Plug 'Elmcast/elm-vim'                            " Elm settings
+"Plug 'Elmcast/elm-vim'                            " Elm settings
 
 "   HTML/JS/CSS
 Plug 'othree/javascript-libraries-syntax.vim',    " Syntax for JavaScript libraries
@@ -173,10 +173,10 @@ Plug 'ap/vim-css-color'                           " Preview colors in css
 Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshrc files
 
 "   RUBY
-Plug 'vim-ruby/vim-ruby'                          " Syntax and Tools for Ruby
-Plug 'tpope/vim-rails'									  " rails.vim: Ruby on Rails power tools
-Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
-Plug 'joker1007/vim-ruby-heredoc-syntax'			  " vim plugin for highliting code in ruby here document
+"Plug 'vim-ruby/vim-ruby'                          " Syntax and Tools for Ruby
+"Plug 'tpope/vim-rails'									  " rails.vim: Ruby on Rails power tools
+"Plug 'tpope/vim-endwise'                          " wisely add 'end' in ruby, endfunction/endif/more in vim script, etc
+"Plug 'joker1007/vim-ruby-heredoc-syntax'			  " vim plugin for highliting code in ruby here document
 
 "Plug 'fishbullet/deoplete-ruby',                  " Deoplete sources for ruby language
             "\ { 'for': 'ruby' }
