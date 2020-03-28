@@ -95,11 +95,13 @@ Plug 'chrisbra/Colorizer'                         " color hex codes and color na
 "Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
 "Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
 "Plug 'lambdalisue/suda.vim'                       " Until neovim fixes sudo, this is a workaround
+Plug 'wakatime/vim-wakatime'							   " Vim plugin for automatic time tracking and metrics generated from your programming activity.
+Plug 'junegunn/limelight.vim'							   " Hyperfocus-writing in Vim.
 
 " Terminal interaction
 "Plug 'benmills/vimux'                             " vim plugin to interact with tmux
 "Plug 'christoomey/vim-tmux-navigator'
-Plug 'zenbro/mirror.vim'                           " Simultaneously work on two files at once
+"Plug 'zenbro/mirror.vim'                           " Simultaneously work on two files at once
 "Plug 'vim-jp/vital.vim'
 "Plug 'haya14busa/vital-string-interpolation'
 
@@ -109,6 +111,7 @@ Plug 'airblade/vim-gitgutter'                     " Display git diff in margin
 "Plug 'tpope/vim-fugitive'                         " a Git wrapper so awesome, it should be illegal
 
 " Colorschemes
+Plug 'NLKNguyen/papercolor-theme'                 " Papercolor theme
 Plug 'rakr/vim-one'                               " 24bit
 Plug 'morhetz/gruvbox'                            " 24bit
 Plug 'lifepillar/vim-solarized8'                  " 24bit
@@ -123,18 +126,19 @@ Plug 'tomasr/molokai'                             " Molokai theme
 Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for handling dictionaries
             \ { 'branch': 'next',
             \ 'do': 'bash install.sh',
-            \ 'for': [ 'Haskell' ]
             \ }
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
 Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugin'}
-					                                   " Dark powered asynchronous completion framework for neovim/Vim8
+		  					                                   " Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
 "Plug 'sheerun/vim-polygot'                       " A solid language pack for Vim.
 "Plug 'roxma/vim-hug-neovim-rpc'
 "Plug 'vim-syntastic/syntastic'                    " Syntax Checking Hacks
 "Plug 'Shougo/neosnippet.vim'
 "Plug 'Shougo/neosnippet-snippets'
+Plug 'junegunn/fzf',
+            \ { 'dir': '~/.config/fzf', 'do': './install --all' }
 
 " Language Specific Plugins
 
@@ -144,18 +148,18 @@ Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplet
 "Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
 
 " Markdown
-Plug 'suan/vim-instant-markdown'                  " live view of markdown in browser
+"Plug 'suan/vim-instant-markdown'                  " live view of markdown in browser
 
 "   HASKELL
 "Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
 "Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
-Plug 'neovimhaskell/haskell-vim'                   " Custom Haskell Vimscripts
+"Plug 'neovimhaskell/haskell-vim'                   " Custom Haskell Vimscripts
                                                   " underlying source code.
 "   GO
 Plug 'fatih/vim-go',                              " Go development plugin for Vim
             \ { 'do': ':GoInstallBinaries' }
-Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
-            \ { 'do': 'make' }
+"Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
+            "\ { 'do': 'make' }
 "Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
 
 "   ELM
@@ -185,7 +189,7 @@ Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshr
 " Status Line
 Plug 'vim-airline/vim-airline'                    " Status line alternative
 Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
-Plug 'ryanoasis/vim-devicons'                     " Adds file type glyphs/icons to populr vim plugins}: NERDTree, Airline Powerline Unite, etcc...
+Plug 'ryanoasis/vim-devicons'                     " Adds file type glyphs/icons to populr vim plugins}: NERDTree, Airline Powerline Unite, etc...
 
 call plug#end()
 " }}}
@@ -229,6 +233,7 @@ let g:ruby_spellcheck_strings = 1
 " See below for extending this for use with Flatiron's learning labs
 
 " Detect when inside Flatiron's learning lab
+
 " junegunn/vim-easy-align Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -297,7 +302,7 @@ let g:NERDCompactSexyComs = 1                     " Use compact syntax for prett
 "\ }
 "
 " fatih/vim-go
-let g:go_fmt_command = "goimports"                " duto import packages when file is saved
+"let g:go_fmt_command = "goimports"                " duto import packages when file is saved
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -325,7 +330,7 @@ let g:go_auto_sameids = 1                         " This option will highlight a
 let g:go_auto_type_info = 1                       " Automatically display type of the variable under cursor on the status line
 
 " autozimu/LanguageClient-neovim
-let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'], }
+let g:LanguageClient_serverCommands = { 'go': ['gopls'], }
                                                   " Configure LSP to use haskell-ide-engine
 " vim-airline/vim-airline
 let g:airline#extensions#quickfix#location_text = 'Location'
@@ -334,6 +339,26 @@ let g:airline#extensions#quickfix#quickfix_text =  'Quickfix'
                                                   " Define the quickfix label
 let g:airline#extensions#tabline#enabled = 1      " Enable enhanced tabline
 let g:airline_powerline_fonts = 1                 " Use powerline symbols
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_theme='papercolor'								  " set the theme
+
+
 
 " ryanoasis/vim-devicons
 let g:webdevicons_enable= 1                       " enable the plugin
@@ -341,7 +366,15 @@ let g:webdevicons_enable_nerdtree = 1             " adding the flags to NERDTree
 let g:webdevicons_enable_airline_tabline = 1      " adding to vim-airline's tabline
 let g:webdevicons_enable_airline_statusline = 1   " adding to vim-airline's statusline
 
+" Junegunn/fzf
+let $FZF_DEFAULT_COMMAND =  "rg --files --hidden 2>/dev/null"
+let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
 " Shougo/deoplete.vim {{{
+set completeopt+=noinsert
+set completeopt+=noselect
+set completeopt-=preview
 set completeopt=longest,menuone                   " auto complete setting
 if has('nvim')
    let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
@@ -366,30 +399,30 @@ let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
 let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
                                                    " Customize the labels for
                                                    " neomake
-let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
+"let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
                                                    " For GOLANG
-let g:neomake_go_gometalinter_maker = {
-  \ 'args': [
-  \   '--tests',
-  \   '--enable-gc',
-  \   '--concurrency=3',
-  \   '--fast',
-  \   '-D', 'aligncheck',
-  \   '-D', 'dupl',
-  \   '-D', 'gocyclo',
-  \   '-D', 'gotype',
-  \   '-E', 'errcheck',
-  \   '-E', 'misspell',
-  \   '-E', 'unused',
-  \   '%:p:h',
-  \ ],
-  \ 'append_file': 0,
-  \ 'errorformat':
-  \   '%E%f:%l:%c:%trror: %m,' .
-  \   '%W%f:%l:%c:%tarning: %m,' .
-  \   '%E%f:%l::%trror: %m,' .
-  \   '%W%f:%l::%tarning: %m'
-  \ }
+"let g:neomake_go_gometalinter_maker = {
+  "\ 'args': [
+  "\   '--tests',
+  "\   '--enable-gc',
+  "\   '--concurrency=3',
+  "\   '--fast',
+  "\   '-D', 'aligncheck',
+  "\   '-D', 'dupl',
+  "\   '-D', 'gocyclo',
+  "\   '-D', 'gotype',
+  "\   '-E', 'errcheck',
+  "\   '-E', 'misspell',
+  "\   '-E', 'unused',
+  "\   '%:p:h',
+  "\ ],
+  "\ 'append_file': 0,
+  "\ 'errorformat':
+  "\   '%E%f:%l:%c:%trror: %m,' .
+  "\   '%W%f:%l:%c:%tarning: %m,' .
+  "\   '%E%f:%l::%trror: %m,' .
+  "\   '%W%f:%l::%tarning: %m'
+  "\ }
 " }}}
 
 " ---------------------------------------------------------------
@@ -401,7 +434,6 @@ let g:neomake_go_gometalinter_maker = {
 " System Settings
 " ------------------------------------
 set nocompatible                                   " Don't make nvim vi-compatible
-set clipboard=unnamed                              " Setting to integrate with mac os clipboard
 set mouse=a                                        " Enable mouse over all modesa
 "set shell=bash/ -i                                  " for the live markdown plugin
 set rtp+=$GOPATH/src/golang.org/x/lint/misc/vim    " Running :Lint will run golint
@@ -441,10 +473,11 @@ set lazyredraw                                     " Do not redraw the screen wh
                                                    " not been typed.
 set textwidth=80                                   " The standard setting for most text files
 set list                                           " Display invisible characters as follows:
-set listchars=tab:▸\                               " ┐
-set listchars+=trail:·                             " │ Use custom symbols to
-"set listchars+=eol:↴                              " │ represent invisible characters.
-set listchars+=nbsp:_                              " ┘
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,nbsp:␣
+"set listchars=tab:▸\                               " ┐
+"set listchars+=trail:·                             " │ Use custom symbols to
+""set listchars+=eol:↴                              " │ represent invisible characters.
+"set listchars+=nbsp:_                              " ┘
 set nojoinspaces                                   " When using the join command
                                                    " only insert a single space
                                                    " after a `.`, `?`, or `!`.
@@ -496,13 +529,16 @@ set wrap                                           " Enable Linewrapping
 "  Text, Tab, and Indent Related
 " ------------------------------------
 filetype plugin indent on                          " set the tab settings according to filetyoe
-set tabstop=3                                      " ┐ Tab characters to appear 3 spaces wide
+set tabstop=2                                      " ┐ Tab characters to appear 3 spaces wide
 set smarttab                                       " │ Enable the tab key to go to next tabstop
 set softtabstop=2                                  " │ Make the tab key insert comb. of spcs
-set shiftwidth=4                                   " │ and tabs to simulate tab stops s
+set shiftwidth=2                                   " │ and tabs to simulate tab stops s
                                                    " │ Size of the 'indent'
 set expandtab                                      " ┘ Use spaces instead of tab
 set showtabline=2                                  " Always show tab bar.
+
+set foldmethod=indent                              " Set the fold to be determined by indents
+set foldlevel=99
 
 " Seach and Replace
 " ------------------------------------
@@ -590,6 +626,10 @@ augroup vimrc
     autocmd vimrc ColorScheme * :hi ExtraWhitespace ctermbg=red guibg=red     " Show trailing whitespace
 augroup END
 
+augroup goyo
+	 autocmd! User GoyoEnter LimeLight
+	 autocmd! User GoyoLeave Limelight!
+augroup END
 " Return to last cursor position when reoponing a file
 augroup preserve_last_cursor_position
     autocmd!
@@ -638,7 +678,7 @@ augroup END
 
 augroup golang
 	 autocmd!
-	 autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+	 autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting()
 augroup END
 " This function will open a file in the current buffer if it is empty
 " otherwise will open in a split pane.
@@ -648,6 +688,24 @@ function! OpenInSplitIfBufferDirty(file)
   else
     exec 'sp' a:file
   endif
+endfunction
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+  let height = float2nr(min([10, &lines/2]))
+  let width = float2nr(min([80, &columns/2]))
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = 1
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+  call nvim_open_win(buf, v:true, opts)
 endfunction
 " Re|Mappings
 " ------------------------------------
@@ -659,7 +717,7 @@ vmap < <gv
 vmap > >gv
 
 " <leader>t will call :Dispatch
-nnoremap <leader>t :Dispatch<CR>
+"nnoremap <leader>t :Dispatch<CR>
 
 " Remap the ':' with ';' for faster access to cmdline mode
 "
@@ -726,6 +784,9 @@ if has('user_commands')
  command! -bang Wa wa<bang>
  command! -bang WA wa<bang>
 endif
+
+" Trigger fzf
+nnoremap <C-Space> :FZF<CR>
 
 " Use the language server functionality
 noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
