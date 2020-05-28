@@ -95,7 +95,6 @@ Plug 'chrisbra/Colorizer'                         " color hex codes and color na
 "Plug 'Chiel92/vim-autoformat'                     " Provide easy code formatting in Vim by integrating existing code formatters.
 Plug 'sbdchd/neoformat'                           " A (Neo)vim plugin for formatting code.
 Plug 'lambdalisue/suda.vim'                       " Until neovim fixes sudo, this is a workaround
-
 " Terminal interaction
 Plug 'benmills/vimux'                             " vim plugin to interact with tmux
 "Plug 'christoomey/vim-tmux-navigator'
@@ -115,9 +114,14 @@ Plug 'lifepillar/vim-solarized8'                  " 24bit
 Plug 'icymind/NeoSolarized'                       " 24bit
 Plug 'flazz/vim-colorschemes'                     " Various colorschemes
 Plug 'jacoborus/tender'                           " Another colorscheme
+
 Plug 'KnoP-01/tortus'                             " Dark gray (yellow on black) colorshecme based on torte.
 Plug 'zanglg/nova.vim'                            " 24bit colorscheme
 Plug 'tomasr/molokai'                             " Molokai theme
+Plug 'protesilaos/tempus-themes-vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'nanotech/jellybeans.vim'
 
 " Backengines
 Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for handling dictionaries
@@ -127,8 +131,8 @@ Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for h
             \ }
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
-Plug 'Shougo/deoplete.nvim', { 'do' : ':UpdateRemotePlugin'}
-					                                   " Dark powered asynchronous completion framework for neovim/Vim8
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplete/deoplete/ncm
 "Plug 'sheerun/vim-polyglot'                       " A solid language pack for Vim.
 "Plug 'roxma/vim-hug-neovim-rpc'
@@ -140,36 +144,38 @@ Plug 'Shougo/neco-syntax'                         " Syntax source for neocomplet
 
 "  SQL
 Plug 'joereynolds/SQHell.vim'                     " An SQL wrapper for vim
-"   VIMRC
+
+"  VIMRC
 Plug 'Shougo/neco-vim'                            " Dictionary for vimrc for Completion
 
 " Markdown
 Plug 'suan/vim-instant-markdown'                  " live view of markdown in browser
 
-"   HASKELL
-Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
+"  HASKELL
+"Plug 'centromere/vim-haskellConcealPlus'          " Display ligatures without modifying
 "Plug 'bitc/lushtags'                              " Create ctags compatible tags files for Haskell
 Plug 'neovimhaskell/haskell-vim'                   " Custom Haskell Vimscripts
-                                                  " underlying source code.
-"   GO
+" underlying source code.
+"  GO
 Plug 'fatih/vim-go',                              " Go development plugin for Vim
             \ { 'do': ':GoInstallBinaries' }
 Plug 'zchee/deoplete-go',                         " Asynchronous Go completion for Neovim. deoplete source for Go.
             \ { 'do': 'make' }
 "Plug 'jodosha/vim-godebug'                        " On MacOS, 'brew install delve' first
 
-"   ELM
+"  ELM
 Plug 'Elmcast/elm-vim'                            " Elm settings
-
-"   HTML/JS/CSS
-Plug 'othree/javascript-libraries-syntax.vim',    " Syntax for JavaScript libraries
-       \ { 'for':
-       \ ['javascript', 'javascript.jsx'] }
+"  HTML/JS/CSS
+"Plug 'othree/javascript-libraries-syntax.vim',    " Syntax for JavaScript libraries
+            "\ { 'for':
+            "\ ['javascript', 'javascript.jsx'] }
 Plug 'othree/html5.vim'                           " HTML5 omnicomplete and syntax
 Plug 'tpope/vim-surround'                         " Wrap current words in tags, quotes, etc..
 Plug 'ap/vim-css-color'                           " Preview colors in css
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
 
-"   ZSH
+"  ZSH
 Plug 'chrisbra/vim-zsh'                           " Syntax highlighting for zshrc files
 
 "   RUBY
@@ -186,6 +192,7 @@ Plug 'joker1007/vim-ruby-heredoc-syntax'			  " vim plugin for highliting code in
 Plug 'vim-airline/vim-airline'                    " Status line alternative
 Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
 Plug 'ryanoasis/vim-devicons'                     " Adds file type glyphs/icons to populr vim plugins}: NERDTree, Airline Powerline Unite, etcc...
+Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
 " }}}
@@ -195,15 +202,26 @@ call plug#end()
 " benmills/vimux
 let g:VimuxHeight = "10"
 
+" jacoborus/tender
+"let g:airline_theme = "tender"
 " simnalamburt/vim-mundo
 let g:mundo_close_on_revert = 1                   " Set to 1 to automatically close the Mundo windows when revertin
 
-" vim-ruby?vim-ruby
+" vim-ruby/vim-ruby
 let g:ruby_indent_block_style = 'do'
 let g:ruby_spellcheck_strings = 1
 
+" nanotech/jellybean.vim
+let g:jellybeans_use_term_italics = 1
+
 " airblade/vim-root
 "let g:rooter_patterns = [ '.learn' ]
+
+" drewtempelmeyer/palenight.vim
+"let g:airline_theme = "palenight"
+
+" kyoz/purify
+let g:airline_theme = "purify"
 
 " tpope/vim-projectionist
 "let g:projectionist_heuristics = {
@@ -225,8 +243,15 @@ let g:ruby_spellcheck_strings = 1
             "\     'dispatch': 'rspec'
             "\   }
             "\ }
-            "\}
+"\}
 " See below for extending this for use with Flatiron's learning labs
+
+" maxmellon/vim-jsx-react
+let g:vim_jsx_pretty_colorful_config=1
+
+
+
+
 
 " Detect when inside Flatiron's learning lab
 " junegunn/vim-easy-align Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -255,7 +280,7 @@ let NERDTreeRespectWildIgnore = 1                 " Refer to wildignore for addi
 let NERDTreeHighlightCursorLine = 1               " Highlight the selected entry in the tree
 let NERDTreeQuitOnOpen = 0                        " Don't quit NERDtree when opening a file
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-                                                  " Close vim if the only window left open is a NERDTree<Paste>
+" Close vim if the only window left open is a NERDTree<Paste>
 let NERDTreeMinimalUI = 1                         " Pretty NERDTree UI
 let NERDTreeDirArrows = 1
 
@@ -294,7 +319,7 @@ let g:NERDCompactSexyComs = 1                     " Use compact syntax for prett
 "        \ 'data'   : 'd',
 "        \ 'type'   : 't'
 "    \ }
-"\ }
+            "\ }
 "
 " fatih/vim-go
 let g:go_fmt_command = "goimports"                " duto import packages when file is saved
@@ -307,31 +332,31 @@ let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
 let g:go_term_enabled = 1                         " This option is Neovim only. Use it
-                                                  " to change the behavior of the test
-                                                  " commands. If set to 1 it opens the
-                                                  " test commands inside a new terminal
-                                                  " according to |'g:go_term_mode'|,
-                                                  " otherwise it will run them in the
-                                                  " background just like `:GoBuild`.
+" to change the behavior of the test
+" commands. If set to 1 it opens the
+" test commands inside a new terminal
+" according to |'g:go_term_mode'|,
+" otherwise it will run them in the
+" background just like `:GoBuild`.
 let g:go_list_type = "quickfix"                   " An issue with `vim-go` and `syntastic`
-                                                  " is that the location list window
-                                                  " that contains the output of commands
-                                                  " such as `:GoBuild` and `:GoTest` might
-                                                  " not appear.
+" is that the location list window
+" that contains the output of commands
+" such as `:GoBuild` and `:GoTest` might
+" not appear.
 let g:go_addtags_transform = "camelcase"          " By default 'snakecase' is used.
-                                                  " Possible values are: ["snakecase", camelcase"].
+" Possible values are: ["snakecase", camelcase"].
 let g:go_auto_sameids = 1                         " This option will highlight all uses of
-                                                  " the identifier under the cursor (:GoSameIds) automatically.
+" the identifier under the cursor (:GoSameIds) automatically.
 let g:go_auto_type_info = 1                       " Automatically display type of the variable under cursor on the status line
 
 " autozimu/LanguageClient-neovim
 let g:LanguageClient_serverCommands = { 'haskell': ['hie', '--lsp'], }
-                                                  " Configure LSP to use haskell-ide-engine
+" Configure LSP to use haskell-ide-engine
 " vim-airline/vim-airline
 let g:airline#extensions#quickfix#location_text = 'Location'
-                                                  " Define the loclist label
+" Define the loclist label
 let g:airline#extensions#quickfix#quickfix_text =  'Quickfix'
-                                                  " Define the quickfix label
+" Define the quickfix label
 let g:airline#extensions#tabline#enabled = 1      " Enable enhanced tabline
 let g:airline_powerline_fonts = 1                 " Use powerline symbols
 
@@ -344,11 +369,11 @@ let g:webdevicons_enable_airline_statusline = 1   " adding to vim-airline's stat
 " Shougo/deoplete.vim {{{
 set completeopt=longest,menuone                   " auto complete setting
 if has('nvim')
-   let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
+    let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
 endif
 let g:deoplete#enable_smart_case = 1              " When a capital letter is
-                                                  " included in input, deoplete does
-                                                  " not ignore the upper- and lowercase.
+" included in input, deoplete does
+" not ignore the upper- and lowercase.
 let g:deoplete#file#enable_buffer_path = 1        " Autocomplete files relative to current buffer
 let g:deoplete#max_list = 30                      " Show maximum of 30 entries in autocomplete popup
 let g:deoplete#enable_camel_case = 1              " Enable camel case completion
@@ -359,37 +384,37 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 let g:deoplete#sources#go#align_class = 1
 
 " neomake/neomake
-autocmd BufWritePost * Neomake
+"autocmd BufWritePost * Neomake
 let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
 let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
-                                                   " Customize the labels for
-                                                   " neomake
+" Customize the labels for
+" neomake
 let g:neomake_go_enabled_makers = [ 'go', 'gometalinter' ]
-                                                   " For GOLANG
+" For GOLANG
 let g:neomake_go_gometalinter_maker = {
-  \ 'args': [
-  \   '--tests',
-  \   '--enable-gc',
-  \   '--concurrency=3',
-  \   '--fast',
-  \   '-D', 'aligncheck',
-  \   '-D', 'dupl',
-  \   '-D', 'gocyclo',
-  \   '-D', 'gotype',
-  \   '-E', 'errcheck',
-  \   '-E', 'misspell',
-  \   '-E', 'unused',
-  \   '%:p:h',
-  \ ],
-  \ 'append_file': 0,
-  \ 'errorformat':
-  \   '%E%f:%l:%c:%trror: %m,' .
-  \   '%W%f:%l:%c:%tarning: %m,' .
-  \   '%E%f:%l::%trror: %m,' .
-  \   '%W%f:%l::%tarning: %m'
-  \ }
+            \ 'args': [
+            \   '--tests',
+            \   '--enable-gc',
+            \   '--concurrency=3',
+            \   '--fast',
+            \   '-D', 'aligncheck',
+            \   '-D', 'dupl',
+            \   '-D', 'gocyclo',
+            \   '-D', 'gotype',
+            \   '-E', 'errcheck',
+            \   '-E', 'misspell',
+            \   '-E', 'unused',
+            \   '%:p:h',
+            \ ],
+            \ 'append_file': 0,
+            \ 'errorformat':
+            \   '%E%f:%l:%c:%trror: %m,' .
+            \   '%W%f:%l:%c:%tarning: %m,' .
+            \   '%E%f:%l::%trror: %m,' .
+            \   '%W%f:%l::%tarning: %m'
+            \ }
 " }}}
 
 " ---------------------------------------------------------------
@@ -401,15 +426,19 @@ let g:neomake_go_gometalinter_maker = {
 " System Settings
 " ------------------------------------
 set nocompatible                                   " Don't make nvim vi-compatible
-set clipboard=unnamed                              " Setting to integrate with mac os clipboard
-set mouse=a                                        " Enable mouse over all modesa
+set clipboard=unnamedplus                          " Setting to integrate with mac os
+" clipboard.
+set mouse=a                                        " Enable mouse over all modes
 "set shell=bash/ -i                                  " for the live markdown plugin
 set rtp+=$GOPATH/src/golang.org/x/lint/misc/vim    " Running :Lint will run golint
+set hidden                                         " Allow abandoning an
+" unsaved buffer when opening
+" another one.
 " Colors and Fonts
 " ------------------------------------
 if (has("termguicolors"))                          " ┐ Attempt to set
     set termguicolors                              " │ 24 bit colors,
-    colorscheme one                                " │ and enable a 24 bit colorscheme
+    colorscheme purify                             " │ and enable a 24 bit colorscheme
 else                                               " │ otherwise, set a sane scheme
     colorscheme molokai                            " │
 endif                                              " ┘
@@ -422,7 +451,7 @@ set backspace+=eol                                 " │ in insert mode over
 set backspace+=start                               " ┘ everything.
 set showcmd                                        " Show the command being typed.
 set cmdheight=2                                    " Set the command section height to two lines;
-                                                   " useful when there are multiple error messages
+" useful when there are multiple error messages
 "set inccommand=nosplit                             " Neovim highlight
 " set colorcolumn=80                               " Set a vertical line at the 80th column.
 let &colorcolumn="80,".join(range(120,999),",")    " Set margins at 80 and 120 columns
@@ -431,14 +460,14 @@ set cursorline                                     " Highlight the current line
 hi CursorLine cterm=bold gui=bold
 hi Comment cterm=italic gui=italic
 "set cpoptions+=$                                  " When making a change, don't
-                                                   " redisplay the line, and
-                                                   " instead, put a `$` sign at
-                                                   " the end of the changed text.
+" redisplay the line, and
+" instead, put a `$` sign at
+" the end of the changed text.
 set laststatus=2                                   " Always show the status line
 set lazyredraw                                     " Do not redraw the screen while
-                                                   " executing macros, registers
-                                                   " and other commands that have
-                                                   " not been typed.
+" executing macros, registers
+" and other commands that have
+" not been typed.
 set textwidth=80                                   " The standard setting for most text files
 set list                                           " Display invisible characters as follows:
 set listchars=tab:▸\                               " ┐
@@ -446,30 +475,30 @@ set listchars+=trail:·                             " │ Use custom symbols to
 "set listchars+=eol:↴                              " │ represent invisible characters.
 set listchars+=nbsp:_                              " ┘
 set nojoinspaces                                   " When using the join command
-                                                   " only insert a single space
-                                                   " after a `.`, `?`, or `!`.
+" only insert a single space
+" after a `.`, `?`, or `!`.
 set modeline                                       " Allow for per-file specific settings
 set number                                         " Show line number
 set numberwidth=5                                  " Increase the minimal number
-                                                   " columns used for the `line
-                                                   " number`.
+" columns used for the `line
+" number`.
 set report=0                                       " Display the count of lines yanked
-                                                   " or deleted
+" or deleted
 "set relativenumber                                " Use relative line numbers.
-                                                   " Current line is still in
-                                                   " status bar. (Disabled for more dynamic
-                                                   " use of this setting. See below)
+" Current line is still in
+" status bar. (Disabled for more dynamic
+" use of this setting. See below)
 set ruler                                          " Show cursor position
 set noshowmode                                     " Don't show the current mode
-                                                   " (airline.vim will handle
-                                                   " this)
+" (airline.vim will handle
+" this)
 "set nostartofline                                 " Keep the cursor on the
-                                                   " on the same column when navigating
-                                                   " between Lines.
+" on the same column when navigating
+" between Lines.
 set scrolloff=5                                    " When scrolling, keep the
-                                                   " cursor 5 lines below the
-                                                   " top and 5 lines above the
-                                                   " bottom of the screen.
+" cursor 5 lines below the
+" top and 5 lines above the
+" bottom of the screen.
 set guioptions-=R                                  " No left scroll bar
 set guioptions-=L                                  " No left scrool bar
 set showmatch                                      " Highlight matching brackets
@@ -477,19 +506,19 @@ set spelllang=en_us                                " Set the spell-check languag
 set splitbelow                                     " ┐ More intuitive window placement
 set splitright                                     " ┘
 set synmaxcol=2500                                 " Limit syntax highlighting
-                                                   " (this avoids the very slow
-                                                   " redrawing when files contain
-                                                   " long lines).
+" (this avoids the very slow
+" redrawing when files contain
+" long lines).
 set title                                          " Show the filename in the
-                                                   " window title bar.
+" window title bar.
 "set virtualedit=all                               " Allow cursor to be anywhere.
 set wildmenu                                       " Enable enhanced command-line
-                                                   " completion (by hitting <TAB>
-                                                   " in command mode, Vim will
-                                                   " show the possible matches
-                                                   " just above the command
-                                                   " line with the first match
-                                                   " highlighted.
+" completion (by hitting <TAB>
+" in command mode, Vim will
+" show the possible matches
+" just above the command
+" line with the first match
+" highlighted.
 "set winminheight=0                                " Allow windows to be squashed;
 set wrap                                           " Enable Linewrapping
 
@@ -500,25 +529,25 @@ set tabstop=3                                      " ┐ Tab characters to appea
 set smarttab                                       " │ Enable the tab key to go to next tabstop
 set softtabstop=2                                  " │ Make the tab key insert comb. of spcs
 set shiftwidth=4                                   " │ and tabs to simulate tab stops s
-                                                   " │ Size of the 'indent'
+" │ Size of the 'indent'
 set expandtab                                      " ┘ Use spaces instead of tab
 set showtabline=2                                  " Always show tab bar.
 
 " Seach and Replace
 " ------------------------------------
 set gdefault                                       " Default add g flag to
-                                                   " search/replace. Add `g` to
-                                                   " toggle.
+" search/replace. Add `g` to
+" toggle.
 set hlsearch                                       " Highlight all search matches
 hi Search cterm=bold gui=bold
 set ignorecase                                     " Ignore case in search patterns.
 set incsearch                                      " Highlight search pattern as
-                                                   " it is being typed.
+" it is being typed.
 set magic                                          " Enable extended regexp.
 set smartcase                                      " Override `ignorecase` option
-                                                   " if the search pattern
-                                                   " contains uppercase
-                                                   " characters.
+" if the search pattern
+" contains uppercase
+" characters.
 
 " File Settings
 " ------------------------------------
@@ -549,34 +578,34 @@ set wildignore+=*/tmp/*                            " ┘
 " Backups, Undo's, Swaps Oh My!
 " ------------------------------------
 if !strlen($SUDO_USER)                             " For system security, test to see
-                                                   " if nvim was invoked by sudo. Sensitive
-                                                   " files should not leave traces around
-                                                   " in user's directory.
-  set backup                                       " Keep the backup file of current file
-                                                   " before recent save.
-  if !isdirectory($HOME . "/.local/share/nvim/backup")
-      call mkdir($HOME . "/.local/share/nvim/backup", "p")
-  endif
+    " if nvim was invoked by sudo. Sensitive
+    " files should not leave traces around
+    " in user's directory.
+    set backup                                       " Keep the backup file of current file
+    " before recent save.
+    if !isdirectory($HOME . "/.local/share/nvim/backup")
+        call mkdir($HOME . "/.local/share/nvim/backup", "p")
+    endif
 
-  set backupdir=~/.local/share/nvim/backup//       " The double slash at the end
-                                                   " of the directory prods Vim into keeping
-                                                   " full path to the file in its undo filename
-                                                   " to avoid collisions. This is used
-                                                   " to same effect for undo files. (See below)
-  set undofile                                     " enable undo file but in a different directory
-  if !isdirectory($HOME . '/.local/share/nvim/undo')
-    call mkdir($HOME . '/.local/share/nvim/undo', 'p', 0700)
-  endif
-  set undodir^=~/.local/share/nvim/undo//          " Location of the undo history
+    set backupdir=~/.local/share/nvim/backup//       " The double slash at the end
+    " of the directory prods Vim into keeping
+    " full path to the file in its undo filename
+    " to avoid collisions. This is used
+    " to same effect for undo files. (See below)
+    set undofile                                     " enable undo file but in a different directory
+    if !isdirectory($HOME . '/.local/share/nvim/undo')
+        call mkdir($HOME . '/.local/share/nvim/undo', 'p', 0700)
+    endif
+    set undodir^=~/.local/share/nvim/undo//          " Location of the undo history
 
-                                                   " Have the swap files saved in one place instead of cluttering up the
-                                                   " working directory. (NOT recommended if multiple users are editing the same
-                                                   " file)
-  if !isdirectory($HOME . '/.local/share/nvim/swap')
-    call mkdir($HOME . '/.local/share/nvim/swap', 'p', 0700)
-  endif
+    " Have the swap files saved in one place instead of cluttering up the
+    " working directory. (NOT recommended if multiple users are editing the same
+    " file)
+    if !isdirectory($HOME . '/.local/share/nvim/swap')
+        call mkdir($HOME . '/.local/share/nvim/swap', 'p', 0700)
+    endif
 
-  set directory^=$HOME/.local/share/nvim/swap//
+    set directory^=$HOME/.local/share/nvim/swap//
 endif
 
 " Macros
@@ -616,38 +645,38 @@ augroup strip_trailing_whitespaces
                 \ "mkd.markdown"
                 \ ]
     autocmd!
-  " Only strip the trailing whitespaces on save if the file type is not in
-  " the aforementioned excludedFileType variable
+    " Only strip the trailing whitespaces on save if the file type is not in
+    " the aforementioned excludedFileType variable
     autocmd BufWritePre * if index(excludedFileTypes, &ft) < 0 | :%s/\s\+$//e
 augroup END
 
 " The following setup will automatically run tests when a test file or its alternate application file is saved:
 "augroup test
-    "autocmd!
-    "autocmd BufWrite * if test#exists() | TestFile endif
-    "
+"autocmd!
+"autocmd BufWrite * if test#exists() | TestFile endif
+"
 "augroup END
 
 " ruby
 augroup rubyft
     autocmd!
     autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
-   autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
-   autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
+    autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
+    autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
 augroup END
 
 augroup golang
-	 autocmd!
-	 autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+    autocmd!
+    autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 augroup END
 " This function will open a file in the current buffer if it is empty
 " otherwise will open in a split pane.
 function! OpenInSplitIfBufferDirty(file)
-  if line('$') == 1 && getline(1) == ''
-    exec 'e' a:file
-  else
-    exec 'sp' a:file
-  endif
+    if line('$') == 1 && getline(1) == ''
+        exec 'e' a:file
+    else
+        exec 'sp' a:file
+    endif
 endfunction
 " Re|Mappings
 " ------------------------------------
@@ -716,18 +745,34 @@ noremap <A-0> :tablast<cr>
 
 " I fat finger quite a bit
 if has('user_commands')
- command! -bang -complete=file -nargs=? E e<bang> <args>
- command! -bang -complete=file -nargs=? W w<bang> <args>
- command! -bang -complete=file -nargs=? WQ wq<bang> <args>
- command! -bang -complete=file -nargs=? Wq wq<bang> <args>
- command! -bang Q q<bang>
- command! -bang Qa qa<bang>
- command! -bang QA qa<bang>
- command! -bang Wa wa<bang>
- command! -bang WA wa<bang>
+    command! -bang -complete=file -nargs=? E e<bang> <args>
+    command! -bang -complete=file -nargs=? W w<bang> <args>
+    command! -bang -complete=file -nargs=? WQ wq<bang> <args>
+    command! -bang -complete=file -nargs=? Wq wq<bang> <args>
+    command! -bang Q q<bang>
+    command! -bang Qa qa<bang>
+    command! -bang QA qa<bang>
+    command! -bang Wa wa<bang>
+    command! -bang WA wa<bang>
 endif
 
 " Use the language server functionality
 noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
 noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
 noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
+
+" Remap such that only yanked text get sent to the system clipboard.
+nnoremap c "cc
+vnoremap c "cc
+nnoremap C "cC
+vnoremap C "cC
+
+nnoremap d "dd
+vnoremap d "dd
+nnoremap D "dD
+vnoremap D "dD
+
+nnoremap x "xx
+vnoremap x "xx
+nnoremap X "xX
+vnoremap X "xX
