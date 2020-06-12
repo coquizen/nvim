@@ -128,10 +128,7 @@ Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'nanotech/jellybeans.vim'
 
 " Backengines
-Plug 'autozimu/LanguageClient-neovim',            " Language Client Server for handling dictionaries
-            \ { 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 "Plug 'Shougo/vimproc.vim', {'do' : 'make'}        " Interactive command execution in Vim.
 Plug 'neomake/neomake'                            " Asynchronous linting and make framework for Neovim/Vim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -405,15 +402,7 @@ set completeopt=longest,menuone                   " auto complete setting
 if has('nvim')
     let g:deoplete#enable_at_startup = 1          " enable deoplete at startup
 endif
-let g:deoplete#enable_smart_case = 1              " When a capital letter is
-" included in input, deoplete does
-" not ignore the upper- and lowercase.
-let g:deoplete#file#enable_buffer_path = 1        " Autocomplete files relative to current buffer
-let g:deoplete#max_list = 30                      " Show maximum of 30 entries in autocomplete popup
 let g:deoplete#enable_camel_case = 1              " Enable camel case completion
-let g:deoplete#keyword_patterns = {}
-let g:deoplete#keyword_patterns['default'] = '\h\w*'
-let g:deoplete#omni#input_patterns = {}
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const'] " For GOLANG
 let g:deoplete#sources#go#align_class = 1
 
@@ -565,7 +554,6 @@ filetype plugin indent on                          " set the tab settings accord
 set tabstop=2                                      " ┐ Tab characters to appear 3 spaces wide
 set smarttab                                       " │ Enable the tab key to go to next tabstop
 set softtabstop=2                                  " │ Make the tab key insert comb. of spcs
-<<<<<<< HEAD
 set shiftwidth=4                                   " │ and tabs to simulate tab stops s
 " │ Size of the 'indent'
 set shiftwidth=2                                   " │ and tabs to simulate tab stops s
