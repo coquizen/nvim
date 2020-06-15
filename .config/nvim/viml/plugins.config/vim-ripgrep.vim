@@ -1,0 +1,4 @@
+" Settings
+" Functions
+" Keymappings
+" Autocmds
