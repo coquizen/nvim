@@ -886,17 +886,17 @@ augroup END
 "augroup END
 
 " ruby
-augroup rubyft
-	autocmd!
-	autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
-	autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
-	autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
-augroup END
+" augroup rubyft
+" 	autocmd!
+" 	autocmd FileType ruby setlocal smartindent expandtab ts=2 sw=2 sts=2 completeopt=menu,preview
+" 	autocmd FileType ruby let b:dispatch = 'learn --fast-fail'
+" 	autocmd BufEnter *.rb highlight rubyPseudoVariable cterm=italic gui=italic ctermfg=red guifg=red
+" augroup END
 
-augroup golang
-	autocmd!
-	autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting()
-augroup END
+" augroup golang
+" 	autocmd!
+" 	autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting()
+" augroup END
 
 " This function will open a file in the current buffer if it is empty
 " otherwise will open in a split pane.
