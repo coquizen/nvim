@@ -109,7 +109,8 @@ Plug 'nanotech/jellybeans.vim'
 
 " UI
 Plug 'machakann/vim-highlightedyank'              " Make the yanked region apparent
-
+Plug 'ervandew/supertab'                          " Perform all your vim insert
+                                                  " mode completions with Tab
 " Editor Plugins
 Plug 'tpope/vim-surround'                         " Wrap current words in tags, quotes, etc..
 
