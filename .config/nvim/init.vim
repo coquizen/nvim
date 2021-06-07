@@ -113,12 +113,13 @@ Plug 'ervandew/supertab'                          " Perform all your vim insert
                                                   " mode completions with Tab
 " Editor Plugins
 Plug 'tpope/vim-surround'                         " Wrap current words in tags, quotes, etc..
-
 Plug 'tyru/caw.vim'                               " Vim comment plugin
 
 " Status Line
-Plug 'vim-airline/vim-airline'                    " Status line alternative
-Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
+" Plug 'vim-airline/vim-airline'                    " Status line alternative
+" Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
+Plug 'itchyny/lightline.vim'                      " A light and configurable
+                                                  " statusline/tabline plugin.
 Plug 'ryanoasis/vim-devicons'                     " Adds file type glyphs/icons
                                                   " to popular vim plugins:
                                                   " NERDTree, Airline
