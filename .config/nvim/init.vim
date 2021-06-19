@@ -114,7 +114,8 @@ Plug 'ervandew/supertab'                          " Perform all your vim insert
 " Editor Plugins
 Plug 'tpope/vim-surround'                         " Wrap current words in tags, quotes, etc..
 Plug 'tyru/caw.vim'                               " Vim comment plugin
-
+Plug 'jiangmiao/auto-pairs'                       " Inserts/deletes brackets,
+                                                  " parens, quotes, in pair.
 " Status Line
 " Plug 'vim-airline/vim-airline'                    " Status line alternative
 " Plug 'vim-airline/vim-airline-themes'             " Color themes for airline
@@ -134,6 +135,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'        " Provide LSP autocompletion s
 Plug 'prabirshrestha/vim-lsp'                     " Async LSP plugin
 Plug 'mattn/vim-lsp-settings'                     " Auto LSP configurations for vim-lsp
 Plug 'Shougo/context_filetype.vim'                " Context filetype detetcion for nested code
+Plug 'preservim/tagbar'                           " Displays tags in a window, ordered by scope
 
 " Misc
 Plug 'prabirshrestha/asyncomplete-buffer.vim'     " Provides buffer autocomplete
@@ -231,19 +233,21 @@ function! s:on_lsp_buffer_enabled() abort
 	endif
 
 	nmap <silent><buffer> K <Plug>(lsp-hover)
-	nmap <silent><buffer> gr <Plug>(lsp-seek-implmentation)
+	nmap <silent><buffer> gi <Plug>(lsp-seek-implmentation)
 	nmap <silent><buffer> gi <Plug>(lsp-peek-type-definition)
 	nmap <silent><buffer> gd <Plug>(lsp-peek-declaration)
-	nmap <silent><buffer> rn <Plug>(lsp-rename)
+	nmap <silent><buffer> gR <Plug>(lsp-rename)
 	nmap <silent><buffer> gA <Plug>(lsp-code-action)
 	nmap <silent><buffer> ,s <Plug>(lsp-signature-help)
 	nmap <silent><buffer> [d <Plug>(lsp-previous-diagnostic)
+	nmap <silent><buffer> ]d <Plug>(lsp-next-diagnostic)
 	nmap <buffer><Leader> F  <Plug>(lsp-document-format)
 endfunction
 
 autocmd User lsp_float_opened
 			\ nmap <buffer> <silent> <Esc> <Plug>(lsp-preview-close)
 autocmd User lsp_float_closed silent! nunmap <buffer> <Esc>
+
 autocmd! FileType markdown.lsp-hover
 			\ nmap <silent><buffer>q :pclose<CR>| doautocmd <nomodeline> BufWinEnter
 autocmd! User lsp_buffer_enabled call <SID>on_lsp_buffer_enabled()
@@ -389,6 +393,12 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Close vim if the only window left open is a NERDTree<Paste>
 let NERDTreeMinimalUI = 1                         " Pretty NERDTree UI
 let NERDTreeDirArrows = 1
+let NERDTREEChDirMode = 2                         " Ensure that when  NERDTree root has changed,
+                                                  " that nvim's pwd is also updated
+let NERDTreeShowLineNumbers = 1
+let NERDTREETreeAutoCenter = 1
+nmap <leader>o :NERDTreeToggle<CR>
+
 
 " scrooloose/nerdtreecommenter
 let g:NERDCompactSexyComs = 1                     " Use compact syntax for prettified multi-line comments
@@ -455,6 +465,51 @@ let g:go_auto_sameids = 1                         " This option will highlight a
 " the identifier under the cursor (:GoSameIds) automatically.
 let g:go_auto_type_info = 1                       " Automatically display type of the variable under cursor on the status line
 
+" Show list of interfacch is implemented by the type under the cursor
+au FileType go nmap <leader>s <Plug>(go-implements)
+
+" Show type info for the word under cursor
+au FileType go nmap <leader>i <Plug>(go-info)
+
+au FileType go nmap <leader>gd  <Plug>(go-doc)
+au FileType go nmap <leader>gdv <Plug>(go-doc-vertical)
+
+" Open the godoc in the browser
+au FileType go nmap <leader>gb <Plug>(go-doc-browser)
+
+" Run/build/test/coverage
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 " autozimu/LanguageClient-neovim
 let g:LanguageClient_serverCommands = { 'go': ['gopls'], }
 " vim-airline/vim-airline
@@ -583,7 +638,7 @@ endif
 " ------------------------------------
 if (has("termguicolors"))                         " ┐ Attempt to set
 	set termguicolors                               " │ 24 bit colors,
-	colorscheme purify                              " │ and enable a 24 bit colorscheme
+	colorscheme foursee                             " │ and enable a 24 bit colorscheme
 else                                              " │ otherwise, set a sane scheme
 	colorscheme molokai                             " │
 endif                                             " ┘
@@ -629,6 +684,10 @@ set textwidth=80                                  " The standard setting for mos
 set list                                          " Display invisible characters as follows:
 
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,nbsp:␣
+
+set matchtime=2                                   " When matching brackets, define
+                                                  " n tenth of a second to
+                                                  " blink.
 
 "set listchars=tab:▸\                             " ┐
 "set listchars+=trail:·                           " │ Use custom symbols to
@@ -680,6 +739,9 @@ set spelllang=en_us                               " Set the spell-check language
 
 set splitbelow                                    " ┐ More intuitive window placement
 set splitright                                    " ┘
+
+set so=999                                        " Make sure the cursor is always vertically
+                                                  " centers on j/k moves.
 
 set synmaxcol=2500                                " Limit syntax highlighting
                                                   " (this avoids the very slow
@@ -761,8 +823,8 @@ set smartcase                                     " Override `ignorecase` option
 
 " File Settings
 " ------------------------------------
-set encoding=utf-8                                " Use UTF-8 without BOM
-set fileencoding=utf-8
+set encoding=utf8                                 " Use UTF-8 without BOM
+set fileencoding=utf8
 
 set binary                                        " Enables reading of binary
 
@@ -945,6 +1007,11 @@ endfunction
 " Define <leader> as '\'
 let mapleader="\<space>"
 
+"  Quickly navigate to necessary buffer
+map <leader>l :BufExplorer<CR>
+imap <leader>l <ESC>:BufExplorer<CR>
+vmap <leader>l <ESC>:BufExplorer<CR>
+
 " Start a new line from any position in insert mode
 inoremap<S-Return> <C-o>o
 " Vmap for maintain Visual Mode after shifting > and <
@@ -959,21 +1026,11 @@ vnoremap <leader>j :m'>+<CR>gv=gv
 
 " <C-r> easier search and replace in visual/select mode
 xnoremap <C-r> :<C-u>call <SID>get_selection('/')<CR><SID>:%s/\V<C-R>=@/<CR>//gc<Left><Left><Left>
-" <leader>t will call :Dispatch
-"nnoremap <leader>t :Dispatch<CR>
-
-" Remap the ':' with ';' for faster access to cmdline mode
-"
-"noremap ; :
-
-" Reading and Writing Protected Files
-cmap w!! w suda://%
-
 " [\* ] Search and replace the word under the cursor.
 map <leader>* :%s/\<<C-r><C-w>\>//<Left>
 
 " [\xs] Clear search terms.
-map <leader>xs <Esc>:noh<CR>
+map <silent><leader><CR> :noh<CR>
 
 " [\l] will run the the learn testing tool in vimux
 "
@@ -993,6 +1050,8 @@ nmap <CR> o<Esc>
 " <Tab> to switch to next buffer, <Shift><Tab> to the previous one
 nnoremap <C-Tab> :<C-U>tabnext<CR>
 nnoremap <C-S-Tab> :<C-U>tabprevious<CR>
+map <leader>bd :bdelete<CR>
+map <leader>bda :1,1000bd!<CR>
 
 " Window navigation using <C-[h,j,k,l]>
 noremap <C-j> <C-w>j
@@ -1008,6 +1067,11 @@ nmap <silent> <Leader>h
 
 " [\v] edit the config files
 nnoremap <silent> <leader>vi :tabnew <bar> :e $HOME/.config/nvim/init.vim<CR>
+
+" Fast saving
+map <Leader>w :w<CR>
+imap <Leader>w <ESC>:w<CR>
+vmap <Leader>w <ESC><ESC>:w<CR>
 
 " Use Alt {1,2 ...} to to tab by number
 noremap <A-1> 1gt
@@ -1035,12 +1099,14 @@ if has('user_commands')
 endif
 
 " Trigger fzf
-nnoremap <C-Space> :FZF<CR>
-
+" Search in files
+nnoremap <C-Space> :Rg<CR>
+" Search files
+nnoremap <silent> <C-F> :Files<CR>
 " Use the language server functionality
-noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
-noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
-noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
+"noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
+"noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
+"noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
 
 " Open the macOS dictionary on current word
 if has('mac')
@@ -1057,7 +1123,3 @@ vnoremap d "dd
 nnoremap D "dD
 vnoremap D "dD
 
-nnoremap x "xx
-vnoremap x "xx
-nnoremap X "xX
-vnoremap X "xX
